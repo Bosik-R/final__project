@@ -1,0 +1,128 @@
+@import '../../../styles/settings.scss';
+
+.root {
+  background-color: $text-color-light;
+  padding: $base-size 0;
+
+  .logoWrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    background-color: inherit;
+    align-items: center;
+    border: none;
+    outline-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .logoImage {
+    width: 50%;
+    //height: 80px;
+    object-fit: cover;
+  }
+
+  .logoTitle {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 50%;
+
+    span {
+      font-family: $font-logo;
+      font-weight: 800;
+      font-size: $base-size * 1.5;
+    }
+
+  }
+  .searchWrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: stretch;
+    height: 100%;
+
+    div {
+      display: flex;
+      flex-wrap: nowrap;
+      position: relative;
+      height: 70%;
+      width: 100%;
+      align-items: center;
+      justify-content: stretch;
+      //border: 0.5px solid;
+      //border-radius: 5px;
+      //z-index: 3;
+      //background-color: none;
+    }
+
+    .selectArrow {
+      position: absolute;
+      height: 100px;
+      left: 120px;
+    }
+
+    input, select {
+      height: 100%;
+      font-size: $base-size * 1.5;
+      background-color: transparent;
+      outline-style: none;
+    }
+    input[type=text] {
+      width: 100%;
+      padding:0 10px;
+      border-top: 0.5px solid;
+      border-bottom: 0.5px solid;
+      border-left: none;
+      border-right: none;
+    }
+    select {
+      position: relative;
+      width: 150px;
+      padding-left: $base-size;
+      appearance: none;
+      z-index: 2;
+      background-color: transparent;
+      border: 0.5px solid;
+      border-radius: 6px 0 0 6px;
+
+    }
+    input[type=submit] {
+      width: 40%;
+      background-color: $primary-color;
+      color: $text-color-light;
+      border: 0.5px solid black;
+      border-radius: 0 6px 6px 0;
+    }
+  }
+
+  .userPanel {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0;
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+
+      div {
+        position: absolute;
+        height: 18px;
+        width: 18px;
+        top: 0;
+        right: -5px;
+        background-color: $primary-color;
+        border-radius: 50%;
+        color: $text-color-light;
+        text-align: center;
+        font-size: $base-size;
+        display: grid;
+        place-items: center;
+      }
+    }
+  }
+
+}

@@ -1,1 +1,13 @@
 $base-size: 12px;
+$dark-color: #2d3436;
+$light-color: #fafafa;
+$primary-color: #ff7600;
+$header-color: #48233C;
+$text-color-light: #ffffff;
+$hover-color: #ff7600;
+
+$font-logo: 'Modak', cursive;
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}

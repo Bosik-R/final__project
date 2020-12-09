@@ -5,12 +5,12 @@ import clsx from 'clsx';
 
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
-import { Header } from '../Header/Header';
-import styles from './MainLayout.module.scss';
+
+import styles from './Homepage.module.scss';
 
 const Component = ({className, children}) => (
   <div className={clsx(className, styles.root)}>
-    <Header />
+    <h2>Homepage</h2>
     {children}
   </div>
 );
@@ -31,7 +31,7 @@ Component.propTypes = {
 // const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
-  Component as MainLayout,
-  // Container as MainLayout,
-  Component as MainLayoutComponent,
+  Component as Homepage,
+  // Container as Homepage,
+  Component as HomepageComponent,
 };
