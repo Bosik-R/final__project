@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { TopNav } from '../TopNav/TopNav';
-import { UserPanel } from '../../features/UserPanel/UserPanel';
+import { TopBar } from '../TopBar/TopBar';
+import { MenuBar } from '../MenuBar/MenuBar';
 
 import styles from './Header.module.scss';
 
 const Component = () => (
   <div className={ styles.root}>
-    <TopNav />
-    <UserPanel />
+    <TopBar />
+    <MenuBar />
   </div>
 );
 

@@ -8,7 +8,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import styles from './TopNav.module.scss';
+import styles from './TopBar.module.scss';
 
 import Flag from 'react-world-flags';
 
@@ -73,7 +73,7 @@ Component.propTypes = {
 // const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
-  Component as TopNav,
-  // Container as TopNav,
-  Component as TopNavComponent,
+  Component as TopBar,
+  // Container as TopBar,
+  Component as TopBarComponent,
 };

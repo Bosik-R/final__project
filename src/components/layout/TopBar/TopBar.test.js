@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { TopNavComponent } from './TopNav';
+import { TopBarComponent } from './TopBar';
 
 describe('Component TopNav', () => {
   it('should render without crashing', () => {
-    const component = shallow(<TopNavComponent />);
+    const component = shallow(<TopBarComponent />);
     expect(component).toBeTruthy();
   });
 });

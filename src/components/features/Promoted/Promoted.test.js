@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { UserPanelComponent } from './UserPanel';
+import { PromotedComponent } from './Promoted';
 
-describe('Component UserPanel', () => {
+describe('Component Promoted', () => {
   it('should render without crashing', () => {
-    const component = shallow(<UserPanelComponent />);
+    const component = shallow(<PromotedComponent />);
     expect(component).toBeTruthy();
   });
 });

@@ -8,21 +8,13 @@ import {
   IoPersonOutline,
   IoHeartOutline,
   IoCartOutline,
-  IoChevronDown,
 } from 'react-icons/io5';
 import { IconContext } from 'react-icons';
 
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
-import styles from './UserPanel.module.scss';
-
-const searchOptions = [
-  {id: '1', name: 'hand tools'},
-  {id: '2', name: 'power tools'},
-  {id: '3', name: 'motor tools'},
-  {id: '4', name: 'cordless power tools'},
-];
+import styles from './MenuBar.module.scss';
 
 const Component = ({className, children}) => (
 
@@ -32,39 +24,29 @@ const Component = ({className, children}) => (
         <Col md='2'>
           <button href='#' className={styles.logoWrapper}>
             <img className={styles.logoImage} src={'/images/Logo.png'} alt='Logo'/>
-            <div className={styles.logoTitle}>
-              <span>HANDY</span>
-              <span>MAN</span>
-            </div>
           </button>
         </Col>
         <Col md='8'>
           <form className={styles.searchWrapper}>
             <div>
-              <select id='category'>
-                {searchOptions.map(option => (
-                  <option key={option.id}>{option.name}</option>
-                ))}
-              </select>
-              <IoChevronDown className={styles.selectArrow} />
               <input type='text' id='serachPrase' name='serachPrase' placeholder='Search product...'/>
               <input type='submit' value='Search' />
             </div>
           </form>
         </Col>
-        <Col md='2' className={styles.userPanel}>
+        <Col md='2' className={styles.userMenu}>
           <IconContext.Provider value={{ size: 30}}>
-            <a href={'#'}>
+            <a href={'/#'}>
               <IoPersonOutline />
 
             </a>
-            <a className={styles.iconWrapper}>
+            <a href={'/#'} className={styles.iconWrapper}>
               <IoHeartOutline />
               <div>
                 <span>0</span>
               </div>
             </a>
-            <a className={styles.iconWrapper}>
+            <a href={'/#'} className={styles.iconWrapper}>
               <IoCartOutline />
               <div>
                 <span>0</span>
@@ -93,7 +75,7 @@ Component.propTypes = {
 // const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
-  Component as UserPanel,
-  // Container as UserPanel,
-  Component as UserPanelComponent,
+  Component as MenuBar,
+  // Container as MenuBar,
+  Component as MenuBarComponent,
 };
