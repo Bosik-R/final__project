@@ -1,20 +1,11 @@
 import Axios from 'axios';
 
 /* selectors */
-export const getAllProducts = ({ products }) => products.data;
-export const getLoadingState = ({ products }) => products.loading;
-
-export const getProductByID = ({products}, id) => {
-  if(products.data !== undefined && products.data.length > 0) {
-    const product = products.data.filter(item => item._id === id);
-    console.log(product);
-    return product[0];
-  }else return {};
-};
+export const getAllCategories = ({ categories }) => categories.data;
 
 
 /* action name creator */
-const reducerName = 'products';
+const reducerName = 'categories';
 const createActionName = name => `app/${reducerName}/${name}`;
 
 /* action types */
@@ -28,29 +19,14 @@ export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 
 /* thunk creators */
-export const fetchProducts = () => {
+
+export const fetchCategories = () => {
   return (dispatch, getState) => {
     dispatch(fetchStarted());
 
     Axios
-      .get('http://localhost:8000/api/products')
+      .get('http://localhost:8000/api/categories')
       .then(res => {
-        dispatch(fetchSuccess(res.data));
-      })
-      .catch(err => {
-        dispatch(fetchError(err.message || true));
-      });
-  };
-};
-
-export const fetchProductById = (id) => {
-  return (dispatch, getState) => {
-    dispatch(fetchStarted());
-
-    Axios
-      .get(`http://localhost:8000/api/products/${id}`)
-      .then(res => {
-        console.log(res.data);
         dispatch(fetchSuccess(res.data));
       })
       .catch(err => {
@@ -78,7 +54,7 @@ export const reducer = (statePart = [], action = {}) => {
           active: false,
           error: false,
         },
-        data: Array.isArray(action.payload) ? action.payload : [action.payload],
+        data: action.payload,
       };
     }
     case FETCH_ERROR: {

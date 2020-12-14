@@ -3,11 +3,16 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { initialState } from './initialState';
+
 import { reducer as productsReducer } from './productsRedux';
+import { reducer as categoriesReducer } from './categoriesRedux';
+import { reducer as cartReducer } from './cartRedux';
 
 // define reducers
 const reducers = {
   products: productsReducer,
+  categories: categoriesReducer,
+  cart: cartReducer,
 };
 
 // add blank reducers for initial state properties without reducers
@@ -19,6 +24,7 @@ Object.keys(initialState).forEach(item => {
 
 const combinedReducers = combineReducers(reducers);
 
+
 // create store
 export const store = createStore(
   combinedReducers,
@@ -27,3 +33,5 @@ export const store = createStore(
     applyMiddleware(thunk)
   )
 );
+
+export default store;

@@ -1,3 +1,7 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 $base-size: 12px;
 $dark-color: #2d3436;
 $light-color: #fafafa;
@@ -6,9 +10,10 @@ $header-color: #48233C;
 $text-color-light: #ffffff;
 $hover-color: #ff7600;
 $carousel-bg: #ecf0f1;
+$hot-deal: #f80000;
 
 $font-promo: 'Montserrat', sans-serif;;
 
-*, *::before, *::after {
-  box-sizing: border-box;
-}
+$border-thin: 0.5px solid black;
+$border-big: 3px solid;
+

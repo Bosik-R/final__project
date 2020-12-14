@@ -16,14 +16,14 @@ import Flag from 'react-world-flags';
 const Component = () => {
 
   return (
-
     <div className={styles.root}>
       <Container>
         <Row>
-          <Col md='9' xs='12' >
-            <div className={styles.promo}>
-              <span>FREE SHIPINNG OVER $200</span>
-              <span>|</span>
+          <Col md='3' xs='12' className={styles.promo}>
+            <span>FREE SHIPINNG OVER $200</span>
+          </Col>
+          <Col md='6' xs='12'className={styles.appIcons}>
+            <div >
               <span>Download App</span>
               <button className={styles.icon__button}>
                 <FaApple className={styles.icon}/>
@@ -36,21 +36,19 @@ const Component = () => {
               </button>
             </div>
           </Col>
-          <div className='col-md-3'>
-            <Row>
-              <div className={styles.currency}>
-                <button className={styles.button}>
-                  <Flag code='gb' height='12' />
-                  <span className={styles.button_title}>English</span>
-                  <FaChevronDown />
-                </button>
-                <button className={styles.button}>
-                  <span className={styles.button_title}>USD</span>
-                  <FaChevronDown />
-                </button>
-              </div>
-            </Row>
-          </div>
+          <Col md='3' xs='12'>
+            <div className={styles.currency}>
+              <button className={styles.button}>
+                <Flag code='gb' height='12' />
+                <span className={styles.button_title}>English</span>
+                <FaChevronDown />
+              </button>
+              <button className={styles.button}>
+                <span className={styles.button_title}>USD</span>
+                <FaChevronDown />
+              </button>
+            </div>
+          </Col>
         </Row>
       </Container>
     </div>

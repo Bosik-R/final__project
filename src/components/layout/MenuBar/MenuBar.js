@@ -1,60 +1,58 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import clsx from 'clsx';
+import { Container, Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
 
-import { Container, Row, Col } from 'react-bootstrap';
 import {
   IoPersonOutline,
-  IoHeartOutline,
   IoCartOutline,
 } from 'react-icons/io5';
-import { IconContext } from 'react-icons';
+
+import {Link} from 'react-router-dom';
 
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 import styles from './MenuBar.module.scss';
 
-const Component = ({className, children}) => (
+const Component = () => (
 
-  <div className={clsx(className, styles.root)}>
+  <div className={styles.root}>
     <Container>
-      <Row>
-        <Col md='2'>
-          <button href='#' className={styles.logoWrapper}>
-            <img className={styles.logoImage} src={'/images/Logo.png'} alt='Logo'/>
-          </button>
-        </Col>
-        <Col md='8'>
-          <form className={styles.searchWrapper}>
-            <div>
-              <input type='text' id='serachPrase' name='serachPrase' placeholder='Search product...'/>
-              <input type='submit' value='Search' />
-            </div>
-          </form>
-        </Col>
-        <Col md='2' className={styles.userMenu}>
-          <IconContext.Provider value={{ size: 30}}>
-            <a href={'/#'}>
-              <IoPersonOutline />
-
-            </a>
-            <a href={'/#'} className={styles.iconWrapper}>
-              <IoHeartOutline />
-              <div>
-                <span>0</span>
+      <Navbar bg='light' variant='light' collapseOnSelect expand='lg'>
+        <Navbar.Brand >
+          <Link to={`${process.env.PUBLIC_URL}/`}>
+            <img
+              src='/images/logo.png'
+              width='50'
+              height='50'
+              className={styles.logoButton}
+              alt='logo'
+            />
+          </Link>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls='responsive-navbar-nav' />
+        <Navbar.Collapse id='responsive-navbar-nav'>
+          <Nav className='mr-auto'>
+            <Nav.Link>
+              <div className={styles.navLink}>
+                <IoPersonOutline size='25'/>
+                <span>User</span>
               </div>
-            </a>
-            <a href={'/#'} className={styles.iconWrapper}>
-              <IoCartOutline />
-              <div>
-                <span>0</span>
+            </Nav.Link>
+            <Nav.Link>
+              <div className={styles.navLink}>
+                <IoCartOutline size='25'/>
+                <span>Cart</span>
               </div>
-            </a>
-          </IconContext.Provider>
-        </Col>
-      </Row>
+            </Nav.Link>
+          </Nav>
+          <Form inline>
+            <FormControl type='text' placeholder='Search' className='mr-sm-2' />
+            <Button variant='warning'>Search</Button>
+          </Form>
+        </Navbar.Collapse>
+      </Navbar>
     </Container>
   </div>
 );

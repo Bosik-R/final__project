@@ -1,0 +1,49 @@
+@import '../../../styles/settings.scss';
+
+.root {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 50px;
+
+  .tabsWrapper {
+    display: flex;
+    justify-content: center;
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .tab {
+      display: inline-block;
+      font-size: $base-size * 1.2;
+      margin: 0;
+      padding: 15px;
+      cursor: pointer;
+    }
+
+    .tabActive {
+      @extend .tab;
+      color: $text-color-light;
+      border: $border-thin;
+      border-color: $primary-color;
+      background-color: $primary-color;
+      border-radius: 5px 5px 0 0;
+      border-bottom: none;
+    }
+  }
+
+  .productsList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    border: $border-thin;
+    border-color: $primary-color;
+    border-radius: 5px;
+    padding: 20px 0;
+    margin-bottom: 20px;
+  }
+
+}

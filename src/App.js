@@ -8,6 +8,7 @@ import { store } from './redux/store';
 
 import { MainLayout } from './components/layout/MainLayout/MainLayout';
 import { Homepage } from './components/views/Homepage/Homepage';
+import { ProductView } from './components/views/ProductView/ProductView';
 import { NotFound } from './components/views/NotFound/NotFound';
 
 import './styles/bootstrap.scss';
@@ -20,6 +21,7 @@ const App = () => (
       <MainLayout>
         <Switch>
           <Route exact path='/' component={Homepage} />
+          <Route path='/products/:id' component={ProductView} />
           <Route path='*' component={NotFound} />
         </Switch>
       </MainLayout>

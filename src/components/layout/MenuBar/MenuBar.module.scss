@@ -3,25 +3,33 @@
 .root {
   background-color: $text-color-light;
   padding: $base-size 0;
+  min-height: 80px;
+
+  .navLink {
+    display: flex;
+    align-items: center;
+    padding: $base-size 0;
+
+    span {
+      font-size: $base-size * 1.5;
+    }
+
+  }
 
   .logoWrapper {
-    width: 100%;
-    height: 80px;
-    display: flex;
-    flex-wrap: nowrap;
+    display: grid;
     background-color: inherit;
-    align-items: center;
+    place-items: center;
     border: none;
     outline-style: none;
     padding: 0;
     margin: 0;
-    clip-path: ellipse(50% 50% at 50% 50%);
+    object-fit: cover;
   }
 
   .logoImage {
     width: 100%;
     height: auto;
-    object-fit: cover;
   }
 
   .searchWrapper {
@@ -35,12 +43,13 @@
       display: flex;
       flex-wrap: nowrap;
       align-items: center;
+      height: 100%;
       width: 70%;
       justify-content: center;
     }
 
     input {
-      height: 60px;
+      height: 50px;
       font-size: $base-size * 1.5;
       background-color: transparent;
       outline-style: none;
