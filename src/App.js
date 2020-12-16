@@ -9,6 +9,7 @@ import { store } from './redux/store';
 import { MainLayout } from './components/layout/MainLayout/MainLayout';
 import { Homepage } from './components/views/Homepage/Homepage';
 import { ProductView } from './components/views/ProductView/ProductView';
+import { Cart } from './components/features/Cart/Cart';
 import { NotFound } from './components/views/NotFound/NotFound';
 
 import './styles/bootstrap.scss';
@@ -22,6 +23,7 @@ const App = () => (
         <Switch>
           <Route exact path='/' component={Homepage} />
           <Route path='/products/:id' component={ProductView} />
+          <Route path='/cart' component={Cart} />
           <Route path='*' component={NotFound} />
         </Switch>
       </MainLayout>

@@ -7,7 +7,6 @@ export const getLoadingState = ({ products }) => products.loading;
 export const getProductByID = ({products}, id) => {
   if(products.data !== undefined && products.data.length > 0) {
     const product = products.data.filter(item => item._id === id);
-    console.log(product);
     return product[0];
   }else return {};
 };
@@ -50,7 +49,6 @@ export const fetchProductById = (id) => {
     Axios
       .get(`http://localhost:8000/api/products/${id}`)
       .then(res => {
-        console.log(res.data);
         dispatch(fetchSuccess(res.data));
       })
       .catch(err => {

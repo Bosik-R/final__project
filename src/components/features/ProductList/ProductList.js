@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import clsx from 'clsx';
 
+import { CartItem} from '../CartItem/CartItem';
+import { CartSummary } from '../CartSummary/CartSummary';
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
@@ -10,8 +12,8 @@ import styles from './ProductList.module.scss';
 
 const Component = ({className, children}) => (
   <div className={clsx(className, styles.root)}>
-    <h2>ProductList</h2>
-    {children}
+    <CartItem />
+    <CartSummary />
   </div>
 );
 

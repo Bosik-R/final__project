@@ -1,16 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { FaApple, FaWindows, FaChevronDown } from 'react-icons/fa';
 import { MdAndroid } from 'react-icons/md';
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-
-import styles from './TopBar.module.scss';
+import {Container, Row, Col } from 'react-bootstrap';
 
 import Flag from 'react-world-flags';
+
+import styles from './TopBar.module.scss';
 
 
 const Component = () => {
@@ -55,23 +52,7 @@ const Component = () => {
   );
 };
 
-Component.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-};
-
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
-
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
-
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
-
 export {
   Component as TopBar,
-  // Container as TopBar,
   Component as TopBarComponent,
 };

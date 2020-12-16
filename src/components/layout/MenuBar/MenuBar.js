@@ -1,79 +1,76 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { Container, Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
-
-import {
-  IoPersonOutline,
-  IoCartOutline,
-} from 'react-icons/io5';
+import { Container, Row, Col, Form, FormControl, Button } from 'react-bootstrap';
 
 import {Link} from 'react-router-dom';
 
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import { IoCartOutline } from 'react-icons/io5';
+
+import { connect } from 'react-redux';
+import { getCart, getFromLocalStorage } from '../../../redux/cartRedux.js';
 
 import styles from './MenuBar.module.scss';
 
-const Component = () => (
+class Component extends React.Component {
+  componentDidMount(){
+    const { cart, pullLocalStorage } = this.props;
 
-  <div className={styles.root}>
-    <Container>
-      <Navbar bg='light' variant='light' collapseOnSelect expand='lg'>
-        <Navbar.Brand >
-          <Link to={`${process.env.PUBLIC_URL}/`}>
-            <img
-              src='/images/logo.png'
-              width='50'
-              height='50'
-              className={styles.logoButton}
-              alt='logo'
-            />
-          </Link>
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls='responsive-navbar-nav' />
-        <Navbar.Collapse id='responsive-navbar-nav'>
-          <Nav className='mr-auto'>
-            <Nav.Link>
-              <div className={styles.navLink}>
-                <IoPersonOutline size='25'/>
-                <span>User</span>
-              </div>
-            </Nav.Link>
-            <Nav.Link>
-              <div className={styles.navLink}>
-                <IoCartOutline size='25'/>
-                <span>Cart</span>
-              </div>
-            </Nav.Link>
-          </Nav>
-          <Form inline>
-            <FormControl type='text' placeholder='Search' className='mr-sm-2' />
-            <Button variant='warning'>Search</Button>
-          </Form>
-        </Navbar.Collapse>
-      </Navbar>
-    </Container>
-  </div>
-);
+    if(cart.products.length === 0) pullLocalStorage();
+
+  }
+
+  render(){
+    const { cart } = this.props;
+    return (
+      <div className={styles.root}>
+        <Container>
+          <Row>
+            <Col>
+              <nav className={styles.nav}>
+                <div className={styles.logo}>
+                  <Link to={`${process.env.PUBLIC_URL}/`}>
+                    <img src='/images/logo.png' alt='logo' />
+                  </Link>
+                  <Form inline>
+                    <FormControl type='text' placeholder='Search' className='mr-sm-2' />
+                    <Button variant='warning'>Search</Button>
+                  </Form>
+                </div>
+                <Link className={styles.cart} to={`${process.env.PUBLIC_URL}/cart`}>
+                  <IoCartOutline size='50'/>
+                  <div>
+                    <span>{cart.products.length}</span>
+                  </div>
+                </Link>
+              </nav>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    );
+  }
+}
 
 Component.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
+  cart: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object,
+  ]),
+  pullLocalStorage: PropTypes.func,
 };
 
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
+const mapStateToProps = state => ({
+  cart: getCart(state),
+});
 
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
+const mapDispatchToProps = dispatch => ({
+  pullLocalStorage: () => dispatch(getFromLocalStorage()),
+});
 
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
-  Component as MenuBar,
-  // Container as MenuBar,
+  MenuContainer as MenuBar,
   Component as MenuBarComponent,
 };

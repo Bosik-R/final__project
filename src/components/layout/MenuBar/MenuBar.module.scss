@@ -5,100 +5,46 @@
   padding: $base-size 0;
   min-height: 80px;
 
-  .navLink {
+  .nav {
     display: flex;
     align-items: center;
-    padding: $base-size 0;
-
-    span {
-      font-size: $base-size * 1.5;
-    }
-
-  }
-
-  .logoWrapper {
-    display: grid;
-    background-color: inherit;
-    place-items: center;
-    border: none;
-    outline-style: none;
-    padding: 0;
-    margin: 0;
-    object-fit: cover;
-  }
-
-  .logoImage {
-    width: 100%;
+    justify-content: space-between;
     height: auto;
-  }
 
-  .searchWrapper {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-
-    div {
+    .logo {
       display: flex;
-      flex-wrap: nowrap;
+      justify-content: flex-start;
       align-items: center;
+    }
+
+    img {
+      padding: 0 $base-size;
       height: 100%;
-      width: 70%;
-      justify-content: center;
+      object-fit: cover;
     }
-
-    input {
-      height: 50px;
-      font-size: $base-size * 1.5;
-      background-color: transparent;
-      outline-style: none;
-    }
-    input[type=text] {
-      width: 80%;
-      border: 0.5px solid;
-      padding:0 10px;
-      border-radius: 5px 0 0 5px;
-    }
-
-    input[type=submit] {
-      width: 20%;
-      padding: 0;
-      border: 0.5px solid black;
-      border-left: none;
-      border-radius: 0 5px 5px 0;
-      background-color: $primary-color;
-      color: $text-color-light;
-    }
-  }
-
-  .userMenu {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-around;
-    align-items: center;
-    padding: 0;
-
-    a {
-      text-decoration: none;
-      color: inherit;
+    .cart {
+      color: $dark-color;
+      padding-right: $base-size;
       position: relative;
+      padding: 0;
+      margin-right: 10px;
 
       div {
         position: absolute;
-        height: 18px;
-        width: 18px;
         top: 0;
-        right: -10px;
-        background-color: $primary-color;
+        right: -15px;
+        width: 25px;
+        height: 25px;
         border-radius: 50%;
-        color: $text-color-light;
-        text-align: center;
-        font-size: $base-size;
+        background-color: $primary-color;
         display: grid;
         place-items: center;
+        span {
+          color: $text-color-light;
+        }
       }
     }
   }
-
 }
+
+

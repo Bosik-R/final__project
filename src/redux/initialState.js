@@ -14,6 +14,7 @@ export const initialState = {
     },
   },
   cart: {
+    priceTotal: 0,
     products: [],
   },
 };

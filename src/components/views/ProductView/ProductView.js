@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import { getProductByID, fetchProductById, getAllProducts, getLoadingState } from '../../../redux/productsRedux';
-import { addToCart, getCart } from '../../../redux/cartRedux';
+import { addToCart, pushToLocalStorage } from '../../../redux/cartRedux';
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
 
 import { IoChevronBack, IoChevronForward, IoCartOutline } from 'react-icons/io5';
@@ -23,6 +23,7 @@ class Component extends React.Component {
     const {fetchProductByIdApi} = this.props;
 
     fetchProductByIdApi(this.props.match.params.id);
+
   }
 
   handleImage(img) {
@@ -36,17 +37,25 @@ class Component extends React.Component {
 
   handleAddToCart(e, item) {
     e.preventDefault();
-    this.props.addToCart(item);
+    const cartData = {
+      _id: item._id,
+      name: item.name,
+      qty: 1,
+      price: item.price,
+      totalPrice: item.price,
+      note:'',
+      minAmount: 1,
+      maxAmount: 10,
+    };
+    this.props.addToCart(cartData);
+    this.props.pushLocalStorage(cartData);
   }
 
   render() {
-    const { product, loading:{active, error}, addToCart, cart } = this.props;
+    const { product, loading:{active, error} } = this.props;
     const { imageIndex, overlay } = this.state;
 
     const { name, images, description, oldPrice, price } = product;
-
-    console.log('cart',cart);
-
 
     if(active || !product._id){
       return (
@@ -96,10 +105,9 @@ class Component extends React.Component {
                     <h2 className={styles.price}>Today price: ${price}</h2>
                     <div className={styles.cart}>
                       <h4>ADD TO CART</h4>
-                      <button onClick={(e) => addToCart(product) }>
+                      <button onClick={(e) => this.handleAddToCart(e, product) }>
                         <IoCartOutline size='80' color='white'/>
                       </button>
-                      <h1>{!cart.products.length ? null : cart.products[0].name}</h1>
                     </div>
                   </Col>
                 </Row>
@@ -145,25 +153,23 @@ Component.propTypes = {
       PropTypes.string,
     ]),
   }),
-
+  pushLocalStorage: PropTypes.func,
 };
 
 const mapStateToProps = (state, props) => ({
-  products: getAllProducts(state),
   product: getProductByID(state, props.match.params.id),
   loading: getLoadingState(state),
-  cart: getCart(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchProductByIdApi: (id) => dispatch(fetchProductById(id)),
   addToCart: (item) => dispatch(addToCart(item)),
+  pushLocalStorage: (cart) => dispatch(pushToLocalStorage(cart)),
 });
 
 const ProductViewContainer = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
-  //Component as ProductView,
   ProductViewContainer as ProductView,
   Component as ProductViewComponent,
 };

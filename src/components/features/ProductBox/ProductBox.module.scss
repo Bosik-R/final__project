@@ -4,6 +4,11 @@
   display: grid;
   place-items: center;
 
+  .link {
+    text-decoration: none;
+    color: inherit;
+  }
+
   .wrapper {
     width: 250px;
     height: 350px;
@@ -16,10 +21,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+
     &:hover {
       -webkit-box-shadow: 0px 0px 23px 2px rgba(255,118,0,0.91);
       box-shadow: 0px 0px 23px 2px rgba(255,118,0,0.91);
     }
+
 
     .image {
       width: 70%;
@@ -34,7 +41,7 @@
 
     p {
       border-top: 0.3px solid;
-      padding-top: 5px;
+      padding: 5px;
       margin-top: 5px;
 
       a {
@@ -56,6 +63,7 @@
         margin: 5px;
         padding: 3px;
         color: $dark-color;
+        background-color: inherit;
       }
 
       .price {
