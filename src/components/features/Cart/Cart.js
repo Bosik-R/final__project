@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-//import clsx from 'clsx';
-
 import { connect } from 'react-redux';
-import { getCart, pushQtyIncrease, pushQtyDecrease } from '../../../redux/cartRedux';
+import {
+  getCart,
+  pushQtyIncrease,
+  pushQtyDecrease,
+  removeFromLocalStorage,
+  updateLocalStorage } from '../../../redux/cartRedux';
 
 import { Container, Table } from 'react-bootstrap';
 
-import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
+import { FaCaretLeft, FaCaretRight, FaTrash } from 'react-icons/fa';
 
 import styles from './Cart.module.scss';
 
@@ -17,26 +20,17 @@ class Component extends React.Component {
   state = {
     qty: 10,
   }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.cart !== this.props.cart) {
+      this.props.updateStorage(this.props.cart);
+    }
+  }
 
   qtyUp(product) {
     if(product.qty >= product.maxAmount){
       alert(`You can only order ${product.maxAmount} pieces in one shipment`);
     } else {
-      //      const q = product.qty + 1;
-      //      const p = product.price * q;
-      //
-      //      this.props.cart.products.map(item => {
-      //        if(item.id === product.id){
-      //          item.qty = q;
-      //          item.totalPrice = p;
-      //        }else{
-      //          return {...item};
-      //        }
-      //        console.log(item);
-      //      });
-
       this.props.qtyIncrease(product);
-
     }
   }
 
@@ -48,17 +42,12 @@ class Component extends React.Component {
     }
   }
 
-  getTotal(qty, price){
-    console.log('qty', qty, 'price', price);
-  }
-
   render(){
-    const { cart } = this.props;
+    const { cart, removeProduct } = this.props;
     const iconSize = 20;
 
-
     if(cart.products.length === 0 ){
-      return <div><h3>Your cart is empty</h3></div>;
+      return <div className={styles.empty}><h3>Your cart is empty</h3></div>;
     } else {
       return (
         <div className={ styles.root}>
@@ -72,6 +61,7 @@ class Component extends React.Component {
                     <th>QTY</th>
                     <th>Price</th>
                     <th>Total</th>
+                    <th>Remove</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -91,6 +81,7 @@ class Component extends React.Component {
                     </td>
                     <td>{product.price}</td>
                     <td>{product.price * product.qty}</td>
+                    <td><button className={styles.remove} onClick={() => removeProduct(product)}><FaTrash/></button></td>
                   </tr>
                 </tbody>
               </Table>
@@ -110,10 +101,11 @@ Component.propTypes = {
   priceTotal: PropTypes.func,
   qtyIncrease: PropTypes.func,
   qtyDecrease: PropTypes.func,
+  removeProduct: PropTypes.func,
+  updateStorage: PropTypes.func,
 };
 
 const mapStateToProps = state => {
-  console.log(state);
   return(
     {
       cart: getCart(state),
@@ -124,6 +116,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   qtyIncrease: (item) => dispatch(pushQtyIncrease(item)),
   qtyDecrease: (item) => dispatch(pushQtyDecrease(item)),
+  removeProduct: (item) => dispatch(removeFromLocalStorage(item)),
+  updateStorage: (item) => dispatch(updateLocalStorage(item)),
 });
 
 const ContainerCart = connect(mapStateToProps, mapDispatchToProps)(Component);

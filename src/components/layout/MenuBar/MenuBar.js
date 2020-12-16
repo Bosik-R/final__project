@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Container, Row, Col, Form, FormControl, Button } from 'react-bootstrap';
@@ -13,11 +13,10 @@ import { getCart, getFromLocalStorage } from '../../../redux/cartRedux.js';
 import styles from './MenuBar.module.scss';
 
 class Component extends React.Component {
+
   componentDidMount(){
     const { cart, pullLocalStorage } = this.props;
-
     if(cart.products.length === 0) pullLocalStorage();
-
   }
 
   render(){
@@ -72,5 +71,4 @@ const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
   MenuContainer as MenuBar,
-  Component as MenuBarComponent,
 };

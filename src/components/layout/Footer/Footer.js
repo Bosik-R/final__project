@@ -1,9 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import { IconContext } from 'react-icons';
 import { FaTwitter, FaFacebookF, FaInstagram } from 'react-icons/fa';
-
 
 import styles from './Footer.module.scss';
 
@@ -30,13 +27,7 @@ const Component = () => (
   </div>
 );
 
-Component.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-};
-
 export {
   Component as Footer,
-  // Container as Footer,
   Component as FooterComponent,
 };

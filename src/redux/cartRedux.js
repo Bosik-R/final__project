@@ -1,13 +1,8 @@
-//import Axios from 'axios';
-
 /* selectors */
-export const getCart = ({ cart }) => cart;
-export const getCartProducts = ({ cart }) => cart.products;
-
-//export const removeFromCart = ({cart}, item) => {
-//  const index = cart.products.inexOf(item);
-//  cart.products.splice(index, 1);
-//};
+export const getCart = ({ cart }) => {
+  console.log(cart);
+  return cart;
+};
 
 /* action name creator */
 const reducerName = 'cart';
@@ -16,7 +11,7 @@ const createActionName = name => `app/${reducerName}/${name}`;
 
 /* action types */
 const ADD_TO_CART = createActionName('ADD_TO_CART');
-//const REMOVE_FROM_CART = createActionName('REMOVE_FROM_CART');
+const REMOVE_FROM_CART = createActionName('REMOVE_FROM_CART');
 const QTY_INCREASE = createActionName('QTY_INCREASE');
 const QTY_DECREASE = createActionName('QTY_DECREASE');
 const STORAGE_TO_STATE = createActionName('STORAGE_TO_STATE');
@@ -24,8 +19,9 @@ const STORAGE_TO_STATE = createActionName('STORAGE_TO_STATE');
 /* action creators */
 export const addToCart = payload => ({ payload, type: ADD_TO_CART });
 export const pushQtyIncrease = payload => ({ ...payload, type: QTY_INCREASE});
-export const pushQtyDecrease = payload => ({ payload, type: QTY_DECREASE});
+export const pushQtyDecrease = payload => ({ ...payload, type: QTY_DECREASE});
 export const getLocalStorage = payload => ({ payload, type: STORAGE_TO_STATE});
+export const removeFromCart = payload => ({ payload, type: REMOVE_FROM_CART});
 
 
 /* thunk creators */
@@ -53,7 +49,6 @@ export const pushToLocalStorage = ( cart ) => {
   return () => {
     try {
       const storage = JSON.parse(localStorage.getItem('cart'));
-      console.log(storage);
       if(storage === null){
         const data = {
           products: [cart],
@@ -70,6 +65,35 @@ export const pushToLocalStorage = ( cart ) => {
   };
 };
 
+export const removeFromLocalStorage = ( item ) => {
+  return (dispatch) => {
+    try {
+      const storage = JSON.parse(localStorage.getItem('cart'));
+
+      storage.products.splice((storage.products.indexOf(item)), 1);
+      localStorage.clear('cart');
+      localStorage.setItem('cart', [JSON.stringify(storage)]);
+      dispatch(removeFromCart(item));
+    }
+
+    catch(err) {
+      console.log(err);
+    }
+  };
+};
+
+export const updateLocalStorage = ( cart ) => {
+  return () => {
+    try {
+      localStorage.clear('cart');
+      localStorage.setItem('cart', [JSON.stringify(cart)]);
+    }
+
+    catch(err) {
+      console.log(err);
+    }
+  };
+};
 
 /* reducer */
 export const reducer = (statePart = [], action = {}) => {
@@ -88,50 +112,39 @@ export const reducer = (statePart = [], action = {}) => {
     }
     case QTY_INCREASE: {
       return {
-        ...statePart,
-        products: [statePart.products.map(item => {
-          if(item.id === action.payload.product.id){
-            return {
-              qty: action.payload.product.qty + 1,
-              totalPrice: action.payload.product.price * item.qty,
-              ...item,
-            };
+        products: statePart.products.map(item => {
+          if(item.id === action.id){
+            item.qty = item.qty + 1;
+            return item;
           }else{
             return (
               {...item}
             );
           }
-        },)],
+        },),
       };
     }
     case QTY_DECREASE: {
       return {
-        ...statePart,
-        products: [statePart.products.map(item => {
-          if(item.id === action.payload.product.id){
-            return {
-              qty: action.payload.product.qty - 1,
-              totalPrice: action.payload.product.price * item.qty,
-              ...item,
-            };
+        products: statePart.products.map(item => {
+          if(item.id === action.id){
+            console.log('minus map działa', action.id);
+            item.qty = item.qty - 1;
+            return item;
           }else{
             return (
               {...item}
             );
           }
-        },)],
+        },),
       };
     }
-    //case REMOVE_FROM_CART: {
-    //  return {
-    //    ...statePart,
-    //    loading: {
-    //      active: false,
-    //      error: false,
-    //    },
-    //    data: action.payload,
-    //  };
-    //}
+    case REMOVE_FROM_CART: {
+      console.log(statePart.products.indexOf(action.payload));
+      return {
+        products: statePart.products.filter(item => item.id !== action.payload.id),
+      };
+    }
     default:
       return statePart;
   }

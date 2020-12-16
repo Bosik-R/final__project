@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import randomID from '@bosiu/id-generator';
+
 import { connect } from 'react-redux';
-import { getProductByID, fetchProductById, getAllProducts, getLoadingState } from '../../../redux/productsRedux';
+import { getProductByID, fetchProductById, getLoadingState } from '../../../redux/productsRedux';
 import { addToCart, pushToLocalStorage } from '../../../redux/cartRedux';
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
 
@@ -38,6 +40,7 @@ class Component extends React.Component {
   handleAddToCart(e, item) {
     e.preventDefault();
     const cartData = {
+      id: randomID(20),
       _id: item._id,
       name: item.name,
       qty: 1,

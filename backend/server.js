@@ -29,7 +29,7 @@ app.use('*', (req, res) => {
 });
 
 /* MONGOOSE */
-mongoose.connect('mongodb://localhost:27017/madzitaTools', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.NODE_ENV === 'production' ? 'mongodb+srv://user:123456ytrewq@cluster0.c3pjw.mongodb.net/final_project?retryWrites=true&w=majority' : 'mongodb://localhost:27017/madzitaTools', { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.once('open', () => {
   console.log('Successfully connected to the database');
