@@ -1,11 +1,8 @@
 import React from 'react';
-//import PropTypes from 'prop-types';
 
 import { Promoted } from '../../features/Promoted/Promoted';
 import { CategoryBar } from '../../features/CategoryBar/CategoryBar';
 
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 import styles from './Homepage.module.scss';
 
@@ -16,18 +13,8 @@ const Component = () => (
   </div>
 );
 
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
-
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
-
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
   Component as Homepage,
-  // Container as Homepage,
   Component as HomepageComponent,
 };
