@@ -1,8 +1,5 @@
 /* selectors */
-export const getCart = ({ cart }) => {
-  console.log(cart);
-  return cart;
-};
+export const getCart = ({ cart }) => cart;
 
 /* action name creator */
 const reducerName = 'cart';
@@ -104,8 +101,6 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case STORAGE_TO_STATE: {
-      console.log(action.payload);
-      console.log(statePart.products);
       return {
         products: statePart.products.length === 0 ? action.payload : [...statePart.products],
       };
@@ -128,7 +123,6 @@ export const reducer = (statePart = [], action = {}) => {
       return {
         products: statePart.products.map(item => {
           if(item.id === action.id){
-            console.log('minus map działa', action.id);
             item.qty = item.qty - 1;
             return item;
           }else{
@@ -140,7 +134,6 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case REMOVE_FROM_CART: {
-      console.log(statePart.products.indexOf(action.payload));
       return {
         products: statePart.products.filter(item => item.id !== action.payload.id),
       };
