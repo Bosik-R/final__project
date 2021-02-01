@@ -1,49 +1,74 @@
-import React from 'react';
-
-import { FaApple, FaWindows, FaChevronDown } from 'react-icons/fa';
-import { MdAndroid } from 'react-icons/md';
-
-import {Container, Row, Col } from 'react-bootstrap';
-
+import React, { useState } from 'react';
+import {
+  Ri24HoursLine,
+  RiTruckLine,
+  RiArrowGoBackLine,
+  RiMoneyEuroCircleLine,
+  RiArrowDownSFill,
+  RiArrowUpSFill,
+} from 'react-icons/ri';
+import { Container, Row, Col } from 'react-bootstrap';
 import Flag from 'react-world-flags';
-
 import styles from './TopBar.module.scss';
 
+const languages = [{id: 'gb', name: 'English'}, {id: 'pl', name: 'Polski'}, {id: 'de', name: 'Deutsch'}];
 
-const Component = () => {
+const TopBar = () => {
+  const [language, setLanguage] = useState(languages[0].name);
+  const [id, setId] = useState(languages[0].id);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(!open);
+  };
+
+  const handleChange = (id) => {
+    const filtered = languages.filter(item => item.id === id);
+
+    setId(filtered[0].id);
+    setLanguage(filtered[0].name);
+    setOpen(!open);
+  };
 
   return (
     <div className={styles.root}>
       <Container>
         <Row>
-          <Col md='3' xs='12' className={styles.promo}>
-            <span>FREE SHIPINNG OVER $200</span>
+          <Col xs='12' sm='10'>
+            <ul className={styles.promo}>
+              <li>
+                <RiTruckLine className={styles.promoIcon}/><span>free shipinng</span>
+              </li>
+              <li>
+                <Ri24HoursLine className={styles.promoIcon}/><span>delivery in 24h</span>
+              </li>
+              <li>
+                <RiArrowGoBackLine className={styles.promoIcon}/><span>free return</span>
+              </li>
+              <li>
+                <RiMoneyEuroCircleLine className={styles.promoIcon}/><span>best price guarantee</span>
+              </li>
+            </ul>
           </Col>
-          <Col md='6' xs='12'className={styles.appIcons}>
-            <div >
-              <span>Download App</span>
-              <button className={styles.icon__button}>
-                <FaApple className={styles.icon}/>
+          <Col xs='12' sm='2'>
+            <div className={styles.language}>
+              <button className={styles.button} onClick={() => handleOpen()}>
+                <Flag code={id} height='12' />
+                <span className={styles.buttonTitle}>{language}</span>
+                {open ?
+                  <RiArrowUpSFill className={styles.dropdownIcon} />
+                  : <RiArrowDownSFill className={styles.dropdownIcon} />}
               </button>
-              <button className={styles.icon__button}>
-                <MdAndroid className={styles.icon} />
-              </button>
-              <button className={styles.icon__button}>
-                <FaWindows className={styles.icon} />
-              </button>
-            </div>
-          </Col>
-          <Col md='3' xs='12'>
-            <div className={styles.currency}>
-              <button className={styles.button}>
-                <Flag code='gb' height='12' />
-                <span className={styles.button_title}>English</span>
-                <FaChevronDown />
-              </button>
-              <button className={styles.button}>
-                <span className={styles.button_title}>USD</span>
-                <FaChevronDown />
-              </button>
+              <ul className={!open ? styles.dropdownClosed : styles.dropdownOpen}>
+                {languages.map(item =>
+                  <li key={item.id}>
+                    <button onClick={() => handleChange(item.id)}>
+                      <Flag code={item.id} height='16' width='24'/>
+                      <span className={styles.buttonTitle}>{item.name}</span>
+                    </button>
+                  </li>
+                )}
+              </ul>
             </div>
           </Col>
         </Row>
@@ -52,7 +77,4 @@ const Component = () => {
   );
 };
 
-export {
-  Component as TopBar,
-  Component as TopBarComponent,
-};
+export default TopBar;
