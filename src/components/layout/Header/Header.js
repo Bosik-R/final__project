@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TopBar } from '../TopBar/TopBar';
+import TopBar from '../TopBar/TopBar';
 import { MenuBar } from '../MenuBar/MenuBar';
 
 import styles from './Header.module.scss';

@@ -4,7 +4,8 @@ import styles from './NotFound.module.scss';
 
 const Component = () => (
   <div className={styles.root}>
-    <h2>NotFound</h2>
+    <img src={'/images/notfound.jpg'} alt='notfound'/>
+    <h2>Not Found</h2>
   </div>
 );
 
