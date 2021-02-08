@@ -1,111 +1,91 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-//import clsx from 'clsx';
-
 import { connect } from 'react-redux';
-import { getCart, getPriceTotal } from '../../../redux/cartRedux';
+import {
+  pushQtyIncrease,
+  pushQtyDecrease,
+  removeFromLocalStorage,
+} from '../../../redux/cartRedux';
 
-import { Container, Table } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 
-import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
+import { BsTrash } from 'react-icons/bs';
+import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import { FaEuroSign } from 'react-icons/fa';
 
 import styles from './CartItem.module.scss';
+import { Link } from 'react-router-dom';
 
-class Component extends React.Component {
+const Component = ({
+  _id,
+  name,
+  images,
+  price,
+  qty,
+  removeProduct,
+  qtyDecrease,
+  qtyIncrease,
+}) => {
 
-  state = {
-    qty: 1,
-  }
-
-  qtyUp(value) {
-    if(value.qty >= 10){
-      this.setState({qty: 10});
-    }else {
-      this.setState({qty: value.qty + 1 });
-      console.log(this.state.qty);
-    }
-  }
-
-  qtyDown(value) {
-    if(value.qty <= 0){
-      this.setState({qty: 0});
-    }else {
-      this.setState({qty: value.qty - 1 });
-      console.log(this.state.qty);
-    }
-  }
-
-  getTotal(qty, price){
-    const {priceTotal} = this.props;
-    console.log('qty', qty, 'price', price);
-    priceTotal();
-
-  }
-
-  render(){
-    const { item, priceTotal } = this.props;
-    const { qty } = this.state;
-    const iconSize = 20;
-    const total = item.price * qty;
-
-
-    return (
-      <div className={ styles.root}>
-        <Container>
-          <Table striped bordered hover size="sm">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Product</th>
-                <th>QTY</th>
-                <th>Price</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>{item.name}</td>
-                <td>
-                  <div className={styles.qty}>
-                    <div>
-                      <FaCaretLeft size={iconSize} onClick={() => this.qtyDown({qty})}/>
-                    </div>
-                    <div>{qty}</div>
-                    <div>
-                      <FaCaretRight size={iconSize} onClick={() => this.qtyUp({qty})}/>
-                    </div>
-                  </div>
-                </td>
-                <td>{item.price}</td>
-                <td>{this.getTotal(qty, item.price)}</td>
-              </tr>
-            </tbody>
-          </Table>
-        </Container>
-      </div>
-    );
-  }
-}
-
-Component.propTypes = {
-  item: PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.object,
-  ]),
-  priceTotal: PropTypes.func,
+  return (
+    <div className={ styles.root}>
+      <Row className={styles.productWrapper}>
+        <Col xs='4' md='2' className={styles.image}>
+          <img src={images[0]} alt='alt'/>
+        </Col>
+        <Col xs='8' md='4'>
+          <Link className={styles.name} to={`${process.env.PUBLIC_URL}/products/${_id}`}>
+            {name}
+          </Link>
+        </Col>
+        <Col xs='4' md='3' className={styles.qty}>
+          <button onClick={() => qtyDecrease(_id)}>
+            <AiOutlineMinus/>
+          </button>
+          <div>
+            <span>
+              {qty}
+            </span>
+          </div>
+          <button onClick={() => qtyIncrease(_id)}>
+            <AiOutlinePlus/>
+          </button>
+        </Col>
+        <Col xs='4' md='2' className={styles.price}>
+          <div>
+            {qty * price}
+          </div>
+          <FaEuroSign />
+        </Col>
+        <Col xs='4' md='1'>
+          <button  className={styles.remove} onClick={() => removeProduct(_id)}>
+            <BsTrash />
+          </button>
+        </Col>
+      </Row>
+    </div>
+  );
 };
 
-const mapStateToProps = state => ({
-  cart: getCart(state),
-});
+Component.propTypes = {
+  _id: PropTypes.string,
+  name: PropTypes.string,
+  images: PropTypes.array,
+  price: PropTypes.number,
+  qty: PropTypes.number,
+  qtyIncrease: PropTypes.func,
+  qtyDecrease: PropTypes.func,
+  removeProduct: PropTypes.func,
+};
 
 const mapDispatchToProps = dispatch => ({
-  priceTotal: (price) => dispatch(getPriceTotal(price)),
+  qtyIncrease: (item) => dispatch(pushQtyIncrease(item)),
+  qtyDecrease: (item) => dispatch(pushQtyDecrease(item)),
+  removeProduct: (item) => dispatch(removeFromLocalStorage(item)),
 });
 
-const ContainerCartItem = connect(mapStateToProps, mapDispatchToProps)(Component);
+const ContainerCartItem = connect(null, mapDispatchToProps)(Component);
 
 export {
   ContainerCartItem as CartItem,

@@ -1,94 +1,54 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { connect } from 'react-redux';
 import {
   getCart,
-  pushQtyIncrease,
-  pushQtyDecrease,
-  removeFromLocalStorage,
-  updateLocalStorage } from '../../../redux/cartRedux';
-
-import { Container, Table } from 'react-bootstrap';
-
-import { FaCaretLeft, FaCaretRight, FaTrash } from 'react-icons/fa';
-
+  totalPrice,
+  updateLocalStorage} from '../../../redux/cartRedux';
+import { Container, Row, Col } from 'react-bootstrap';
+import { FaEuroSign } from 'react-icons/fa';
+import { CartItem } from '../CartItem/CartItem';
 import styles from './Cart.module.scss';
+import { Link } from 'react-router-dom';
 
 class Component extends React.Component {
 
-  state = {
-    qty: 10,
-  }
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.cart !== this.props.cart) {
-      this.props.updateStorage(this.props.cart);
+    if(prevProps.cart.products.length !== this.props.cart.products.length) {
+      updateLocalStorage(this.props.cart);
     }
   }
 
-  qtyUp(product) {
-    if(product.qty >= product.maxAmount){
-      alert(`You can only order ${product.maxAmount} pieces in one shipment`);
-    } else {
-      this.props.qtyIncrease(product);
-    }
-  }
+  render() {
+    const { cart, total } = this.props;
 
-  qtyDown(product) {
-    if(product.qty <= product.minAmount){
-      alert(`You have to order at least ${product.minAmount} piece`);
-    }else {
-      this.props.qtyDecrease(product);
-    }
-  }
-
-  render(){
-    const { cart, removeProduct } = this.props;
-    const iconSize = 20;
-
-    if(cart.products.length === 0 ){
-      return <div className={styles.empty}><h3>Your cart is empty</h3></div>;
-    } else {
+    if(cart.products.length){
       return (
         <div className={ styles.root}>
-          <Container>
-            {cart.products.map(product => (
-              <Table striped bordered hover size="sm" key={product.id}>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Product</th>
-                    <th>QTY</th>
-                    <th>Price</th>
-                    <th>Total</th>
-                    <th>Remove</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>{product.name}</td>
-                    <td>
-                      <div className={styles.qty}>
-                        <div>
-                          <FaCaretLeft size={iconSize} onClick={() => this.qtyDown({...product})}/>
-                        </div>
-                        <div>{product.qty}</div>
-                        <div>
-                          <FaCaretRight size={iconSize} onClick={() => this.qtyUp({...product})}/>
-                        </div>
-                      </div>
-                    </td>
-                    <td>{product.price}</td>
-                    <td>{product.price * product.qty}</td>
-                    <td><button className={styles.remove} onClick={() => removeProduct(product)}><FaTrash/></button></td>
-                  </tr>
-                </tbody>
-              </Table>
-            ))}
+          <Container className={styles.container}>
+            <Row>
+              <Col xs={{span: '12', order: 'last'}} md={{span: '9', order: 'first'}}>
+                {cart.products.map(item =>
+                  <CartItem key={item._id} {...item} />
+                )}
+              </Col>
+              <Col xs={{span: '12', order: 'first'}} md={{span: '3', order: 'last'}}>
+                <div className={styles.summaryWrapper}>
+                  <div className={styles.total}>
+                    <span>{total}</span>
+                    <FaEuroSign size='20'/>
+                  </div>
+                  <Link className={styles.order} to={`${process.env.PUBLIC_URL}/order`}>Delivery & Payment</Link>
+                  <Link className={styles.continue} to={`${process.env.PUBLIC_URL}/`}>continue shopping</Link>
+
+                </div>
+              </Col>
+            </Row>
           </Container>
         </div>
       );
+    } else {
+      return <div className={styles.empty}><h3>Cart empty</h3></div>;
     }
   }
 }
@@ -98,29 +58,15 @@ Component.propTypes = {
     PropTypes.array,
     PropTypes.object,
   ]),
-  priceTotal: PropTypes.func,
-  qtyIncrease: PropTypes.func,
-  qtyDecrease: PropTypes.func,
-  removeProduct: PropTypes.func,
-  updateStorage: PropTypes.func,
+  total: PropTypes.number,
 };
 
-const mapStateToProps = state => {
-  return(
-    {
-      cart: getCart(state),
-    }
-  );
-};
-
-const mapDispatchToProps = dispatch => ({
-  qtyIncrease: (item) => dispatch(pushQtyIncrease(item)),
-  qtyDecrease: (item) => dispatch(pushQtyDecrease(item)),
-  removeProduct: (item) => dispatch(removeFromLocalStorage(item)),
-  updateStorage: (item) => dispatch(updateLocalStorage(item)),
+const mapStateToProps = state => ({
+  cart: getCart(state),
+  total: totalPrice(state),
 });
 
-const ContainerCart = connect(mapStateToProps, mapDispatchToProps)(Component);
+const ContainerCart = connect(mapStateToProps)(Component);
 
 export {
   ContainerCart as Cart,

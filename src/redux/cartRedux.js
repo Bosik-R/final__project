@@ -1,6 +1,16 @@
 /* selectors */
 export const getCart = ({ cart }) => cart;
 
+export const totalPrice = ({ cart }) => {
+  let total = 0;
+  let price = 0;
+  cart.products.forEach(item => {
+    price = item.price * item.qty;
+    total = total + price;
+  });
+  return total;
+};
+
 /* action name creator */
 const reducerName = 'cart';
 
@@ -15,8 +25,8 @@ const STORAGE_TO_STATE = createActionName('STORAGE_TO_STATE');
 
 /* action creators */
 export const addToCart = payload => ({ payload, type: ADD_TO_CART });
-export const pushQtyIncrease = payload => ({ ...payload, type: QTY_INCREASE});
-export const pushQtyDecrease = payload => ({ ...payload, type: QTY_DECREASE});
+export const pushQtyIncrease = payload => ({ payload, type: QTY_INCREASE});
+export const pushQtyDecrease = payload => ({ payload, type: QTY_DECREASE});
 export const getLocalStorage = payload => ({ payload, type: STORAGE_TO_STATE});
 export const removeFromCart = payload => ({ payload, type: REMOVE_FROM_CART});
 
@@ -62,15 +72,17 @@ export const pushToLocalStorage = ( cart ) => {
   };
 };
 
-export const removeFromLocalStorage = ( item ) => {
+export const removeFromLocalStorage = ( _id ) => {
   return (dispatch) => {
     try {
       const storage = JSON.parse(localStorage.getItem('cart'));
+      const product = storage.products.map(item => item._id === _id);
+      console.log(product);
 
-      storage.products.splice((storage.products.indexOf(item)), 1);
+      storage.products.splice((storage.products.indexOf(product)), 1);
       localStorage.clear('cart');
       localStorage.setItem('cart', [JSON.stringify(storage)]);
-      dispatch(removeFromCart(item));
+      dispatch(removeFromCart(_id));
     }
 
     catch(err) {
@@ -108,7 +120,7 @@ export const reducer = (statePart = [], action = {}) => {
     case QTY_INCREASE: {
       return {
         products: statePart.products.map(item => {
-          if(item.id === action.id){
+          if(item._id === action.payload){
             item.qty = item.qty + 1;
             return item;
           }else{
@@ -122,7 +134,7 @@ export const reducer = (statePart = [], action = {}) => {
     case QTY_DECREASE: {
       return {
         products: statePart.products.map(item => {
-          if(item.id === action.id){
+          if(item._id === action.payload){
             item.qty = item.qty - 1;
             return item;
           }else{
@@ -134,8 +146,9 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case REMOVE_FROM_CART: {
+      console.log(action.payload);
       return {
-        products: statePart.products.filter(item => item.id !== action.payload.id),
+        products: statePart.products.filter(item => item._id !== action.payload),
       };
     }
     default:
