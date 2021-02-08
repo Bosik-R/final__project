@@ -1,15 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import { Container, Row, Col, Form, FormControl, Button } from 'react-bootstrap';
-
 import {Link} from 'react-router-dom';
-
-import { IoCartOutline } from 'react-icons/io5';
-
 import { connect } from 'react-redux';
 import { getCart, getFromLocalStorage } from '../../../redux/cartRedux.js';
-
+import { Container, Row, Col} from 'react-bootstrap';
+import { IoCartOutline } from 'react-icons/io5';
 import styles from './MenuBar.module.scss';
 
 class Component extends React.Component {
@@ -24,25 +19,19 @@ class Component extends React.Component {
     return (
       <div className={styles.root}>
         <Container>
-          <Row>
-            <Col>
-              <nav className={styles.nav}>
-                <div className={styles.logo}>
-                  <Link to={`${process.env.PUBLIC_URL}/`}>
-                    <img src='/images/logo.png' alt='logo' />
-                  </Link>
-                  <Form inline>
-                    <FormControl type='text' placeholder='Search' className='mr-sm-2' />
-                    <Button variant='warning'>Search</Button>
-                  </Form>
+          <Row className={styles.nav}>
+            <Col xs='6'>
+              <Link className={styles.image} to={`${process.env.PUBLIC_URL}/`}>
+                <img src='/images/logo1.png' alt='logo' />
+              </Link>
+            </Col>
+            <Col xs='6' className={styles.menu}>
+              <Link className={styles.cart} to={`${process.env.PUBLIC_URL}/cart`}>
+                <IoCartOutline size='45'/>
+                <div>
+                  <span>{cart.products.length}</span>
                 </div>
-                <Link className={styles.cart} to={`${process.env.PUBLIC_URL}/cart`}>
-                  <IoCartOutline size='50'/>
-                  <div>
-                    <span>{cart.products.length}</span>
-                  </div>
-                </Link>
-              </nav>
+              </Link>
             </Col>
           </Row>
         </Container>
