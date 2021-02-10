@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import {Link} from 'react-router-dom';
-
+import { FaEuroSign } from 'react-icons/fa';
 import styles from './ProductBox.module.scss';
 
 const Component = ({ item }) => {
@@ -16,12 +15,11 @@ const Component = ({ item }) => {
             <img src={item.images[0]} alt={item.name}/>
           </div>
           <p>{item.description}</p>
-          <div className={styles.options}>
-            <div className={styles.price}>
-              Price $
-              {item.oldPrice ? <span className={styles.oldPrice}>{item.oldPrice}</span> : null}
-              {item.price}
-            </div>
+          <div className={styles.priceWrapper}>
+            <span>Price</span>
+            <FaEuroSign />
+            {item.oldPrice ? <span className={styles.oldPrice}>{item.oldPrice}</span> : null}
+            <span>{item.price}</span>
           </div>
         </div>
       </Link>

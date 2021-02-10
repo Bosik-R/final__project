@@ -85,9 +85,9 @@ const mapDispatchToProps = dispatch => ({
   removeProduct: (item) => dispatch(removeFromLocalStorage(item)),
 });
 
-const ContainerCartItem = connect(null, mapDispatchToProps)(Component);
+const CartItemContainer = connect(null, mapDispatchToProps)(Component);
 
 export {
-  ContainerCartItem as CartItem,
+  CartItemContainer as CartItem,
   Component as CartItemComponent,
 };

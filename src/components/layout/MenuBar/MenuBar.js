@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCart, getFromLocalStorage } from '../../../redux/cartRedux.js';
+import { cartQty, getCart, getFromLocalStorage } from '../../../redux/cartRedux.js';
 import { Container, Row, Col} from 'react-bootstrap';
 import { IoCartOutline } from 'react-icons/io5';
 import styles from './MenuBar.module.scss';
@@ -15,7 +15,7 @@ class Component extends React.Component {
   }
 
   render(){
-    const { cart } = this.props;
+    const { qty } = this.props;
     return (
       <div className={styles.root}>
         <Container>
@@ -29,7 +29,7 @@ class Component extends React.Component {
               <Link className={styles.cart} to={`${process.env.PUBLIC_URL}/cart`}>
                 <IoCartOutline size='45'/>
                 <div>
-                  <span>{cart.products.length}</span>
+                  <span>{ qty }</span>
                 </div>
               </Link>
             </Col>
@@ -46,10 +46,12 @@ Component.propTypes = {
     PropTypes.object,
   ]),
   pullLocalStorage: PropTypes.func,
+  qty: PropTypes.number,
 };
 
 const mapStateToProps = state => ({
   cart: getCart(state),
+  qty: cartQty(state),
 });
 
 const mapDispatchToProps = dispatch => ({

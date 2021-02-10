@@ -5,45 +5,51 @@
   width: 100%;
   margin: 0 auto;
   padding-top: 50px;
+  background-color: $bg-light;
 
   .tabsWrapper {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    padding-bottom: 30px;
 
     ul {
       list-style: none;
       padding: 0;
       margin: 0;
-    }
 
-    .tab {
-      display: inline-block;
+      .tab {
+        display: inline-block;
       font-size: $base-size * 1.2;
-      margin: 0;
+      margin: 10px;
       padding: 15px;
       cursor: pointer;
-    }
-
-    .tabActive {
-      @extend .tab;
-      color: $text-color-light;
       border: $border-thin;
-      border-color: $primary-color;
-      background-color: $primary-color;
-      border-radius: 5px 5px 0 0;
-      border-bottom: none;
+      border-radius: 5px;
+      background-color: $light-color;
+
+        @media (max-width: 767px) {
+          font-size: $base-size;
+        }
+
+        @media (max-width: 530px) {
+          justify-content: space-between;
+        }
+      }
+
+      .tabActive {
+        @extend .tab;
+        border-color: $primary-color;
+        color: $text-color-light;
+        background-color: $primary-color;
+      }
     }
   }
 
   .productsList {
     display: flex;
+    justify-content: flex-start;
     flex-wrap: wrap;
-    justify-content: space-around;
-    border: $border-thin;
-    border-color: $primary-color;
-    border-radius: 5px;
     padding: 20px 0;
     margin-bottom: 20px;
   }
-
 }

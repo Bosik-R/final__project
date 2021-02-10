@@ -1,32 +1,36 @@
 @import '../../../styles/settings.scss';
 .root {
-  width: 100%;
-  display: grid;
-  place-items: center;
+  margin: 10px;
 
   .link {
     text-decoration: none;
     color: inherit;
+
   }
 
   .wrapper {
     width: 250px;
     height: 350px;
     margin-bottom: 10px;
-    border: $border-thin;
-    background-color: $primary-color;
-    border-radius: 5px;
     background-color: $light-color;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    transition: transform 0.4s ease;
 
     &:hover {
-      -webkit-box-shadow: 0px 0px 23px 2px rgba(255,118,0,0.91);
-      box-shadow: 0px 0px 23px 2px rgba(255,118,0,0.91);
+      transform: translate(-6px, -6px);
+      -webkit-box-shadow: 12px 12px 8px 0px $dark-color;
+      box-shadow: 12px 12px 8px 0px $dark-color;
     }
 
+    h4 {
+      width: 95%;
+      border-bottom: $border-thin;
+      text-align: center;
+      padding: 5px 0;
+    }
 
     .image {
       width: 70%;
@@ -40,9 +44,8 @@
     }
 
     p {
-      border-top: 0.3px solid;
-      padding: 5px;
-      margin-top: 5px;
+      border-top: $border-thin;
+      margin: 10px 5px;
 
       a {
         text-decoration: none;
@@ -50,31 +53,28 @@
       }
     }
 
-    .options {
+    .priceWrapper {
       display: flex;
       justify-content: flex-end;
       align-items: center;
       width: 100%;
       padding: 0 5px;
 
-      .icon {
-        border: $border-thin;
-        border-radius: 5px;
-        margin: 5px;
-        padding: 3px;
-        color: $dark-color;
-        background-color: inherit;
+      span {
+        font-size: 20px;
+        padding: 0 5px;
+        position: relative;
       }
 
-      .price {
-        font-size: 18px;
-        font-weight: 500;
-        padding: 3px;
-      }
-
-      .oldPrice {
-        @extend .price;
-        text-decoration: line-through;
+      .oldPrice::before {
+        content: '';
+        position: absolute;
+        width: 32px;
+        height: 2px;
+        top: 12px;
+        left: 0;
+        background-color: black;
+        transform: rotate(-20deg);
       }
     }
   }

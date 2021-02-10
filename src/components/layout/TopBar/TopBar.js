@@ -34,7 +34,7 @@ const TopBar = () => {
     <div className={styles.root}>
       <Container>
         <Row>
-          <Col xs='12' sm='10'>
+          <Col xs='12' sm='9'>
             <ul className={styles.promo}>
               <li>
                 <RiTruckLine className={styles.promoIcon}/><span>free shipinng</span>
@@ -50,7 +50,7 @@ const TopBar = () => {
               </li>
             </ul>
           </Col>
-          <Col xs='12' sm='2'>
+          <Col xs='12' sm='3'>
             <div className={styles.language}>
               <button className={styles.button} onClick={() => handleOpen()}>
                 <Flag code={id} height='12' />

@@ -62,12 +62,12 @@ class Component extends React.Component {
                   ))}
                 </ul>
               </Col>
-              <Col xs='12'>
+              <Col xs='12' className={styles.products}>
                 <div className={styles.productsList}>
                   {productsFiltered.map(product => (
-                    <Col key={product.id} xs='12' md='6' lg='4' xl='3'>
+                    <div key={product.id} className={styles.productWrapper}>
                       <ProductBox item={product} />
-                    </Col>
+                    </div>
                   ))}
                 </div>
               </Col>

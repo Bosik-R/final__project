@@ -1,16 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import randomID from '@bosiu/id-generator';
-
 import { connect } from 'react-redux';
 import { getProductByID, fetchProductById, getLoadingState } from '../../../redux/productsRedux';
-import { addToCart, pushToLocalStorage } from '../../../redux/cartRedux';
+import { addToCart, getCart, pushToLocalStorage, pushQtyIncrease, updateLocalStorage, pushQtyDecrease } from '../../../redux/cartRedux';
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
-
-import { IoChevronBack, IoChevronForward, IoCartOutline } from 'react-icons/io5';
-
-
+import { BiExpand } from 'react-icons/bi';
+import { FaEuroSign } from 'react-icons/fa';
+import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import Overlay from '../../features/Overlay/Overlay';
 import styles from './ProductView.module.scss';
 
 
@@ -19,13 +16,13 @@ class Component extends React.Component {
   state = {
     imageIndex: 0,
     overlay: false,
+    qty: 1,
   }
 
   componentDidMount(){
-    const {fetchProductByIdApi} = this.props;
+    const {fetchProductByIdApi, match} = this.props;
 
-    fetchProductByIdApi(this.props.match.params.id);
-
+    fetchProductByIdApi(match.params.id);
   }
 
   handleImage(img) {
@@ -39,28 +36,41 @@ class Component extends React.Component {
 
   handleAddToCart(e, item) {
     e.preventDefault();
-    const cartData = {
-      id: randomID(20),
-      _id: item._id,
-      name: item.name,
-      qty: 1,
-      price: item.price,
-      totalPrice: item.price,
-      note:'',
-      minAmount: 1,
-      maxAmount: 10,
-    };
-    this.props.addToCart(cartData);
-    this.props.pushLocalStorage(cartData);
+
+    const {cart, updateLocalStorage, addToCart} = this.props;
+
+    item.qty = this.state.qty;
+
+    addToCart(item);
+    updateLocalStorage(cart);
+  }
+
+  qtyMinus() {
+    const {qty} = this.state;
+    if(qty <= 1) {
+      this.setState({qty: 1});
+    }else{
+      this.setState({qty: qty - 1});
+    }
+  }
+
+  qtyPlus() {
+    const { qty } = this.state;
+    if(qty >= 10) {
+      this.setState({qty: 10});
+    } else {
+      this.setState({qty: qty + 1});
+    }
+
   }
 
   render() {
     const { product, loading:{active, error} } = this.props;
-    const { imageIndex, overlay } = this.state;
+    const { imageIndex, overlay, qty } = this.state;
 
-    const { name, images, description, oldPrice, price } = product;
+    const { _id, name, images, description, oldPrice, price } = product;
 
-    if(active || !product._id){
+    if(active || !_id){
       return (
         <div>
           <Spinner animation='border' variant='warning'/>
@@ -77,60 +87,75 @@ class Component extends React.Component {
       return(
         <div className={styles.root}>
           <Container>
-            <Row>
-              <Col xs='5'>
-                <div className={styles.image}>
-                  <img src={images[imageIndex]} alt={name} onClick={() => this.toggleOverlay()}/>
-                </div>
-                <div className={styles.gallery}>
-                  {images.map(pic => (
-                    <img key={pic} src={pic} alt='pic' onClick={() => this.handleImage(pic)} />
-                  ))}
-                </div>
-              </Col>
-              <Col xs='7'>
+            <Row className={styles.productWrapper}>
+              <Col xs='12' md='5'>
                 <Row>
-                  <Col md='6' xs='12'>
-                    <div className={styles.description}>
+                  <Col xs='8' md='12'>
+                    <div className={styles.image}>
+                      <img src={images[imageIndex]} alt={name}/>
+                      <button onClick={() => this.toggleOverlay()}>
+                        <BiExpand/>
+                      </button>
+                    </div>
+                  </Col>
+                  <Col xs='4' md='12'>
+                    <div className={styles.gallery}>
+                      {images.map(pic => (
+                        <img key={pic} src={pic} alt='pic' onClick={() => this.handleImage(pic)} />
+                      ))}
+                    </div>
+                  </Col>
+                </Row>
+              </Col>
+              <Col xs='12' md='7'>
+                <Row>
+                  <Col className={styles.productInfo}>
+                    <div>
                       <h3>{name}</h3>
                       <p>{description}</p>
                     </div>
-                  </Col>
-                  <Col md='6' xs='12'>
-                    {oldPrice ?
-                      <div className={styles.hotDeal}>
-                        <h4>HOT DEAL</h4>
-                        <h5>Old Price crossed out</h5>
-                        <div className={styles.oldPrice}>${oldPrice}</div>
+                    <div className={styles.priceWrapper}>
+                      {oldPrice ?
+                        <div className={styles.oldPrice}>
+                          <span>-40%</span>
+                          <span>
+                            <FaEuroSign size='20'/>
+                            <div>{oldPrice}</div>
+                          </span>
+                        </div>
+                        : null
+                      }
+                      <div className={styles.price}>
+                        <div>Price:</div>
+                        <FaEuroSign size='20'/>
+                        <div>{price}</div>
                       </div>
-                      : null
-                    }
-                    <h2 className={styles.price}>Today price: ${price}</h2>
-                    <div className={styles.cart}>
-                      <h4>ADD TO CART</h4>
-                      <button onClick={(e) => this.handleAddToCart(e, product) }>
-                        <IoCartOutline size='80' color='white'/>
+                    </div>
+                    <div className={styles.qty}>
+                      <button onClick={() => this.qtyMinus()}>
+                        <AiOutlineMinus/>
+                      </button>
+                      <div className={styles.qtyValue}>
+                        <div>
+                          {qty}
+                        </div>
+                      </div>
+                      <button onClick={() => this.qtyPlus()}>
+                        <AiOutlinePlus/>
                       </button>
                     </div>
+                    <button className={styles.cart} onClick={(e) => this.handleAddToCart(e, product)}>
+                      add to cart
+                    </button>
                   </Col>
                 </Row>
               </Col>
             </Row>
           </Container>
-          <div className={overlay ? styles.overlayActive : styles.overlay}>
-            <div className={styles.exit} onClick={() => this.toggleOverlay()}>X</div>
-            <div>
-              <button className={styles.button}>
-                <IoChevronBack size='40' />
-              </button>
-              <div className={styles.imageWrapper}>
-                <img src={images[imageIndex]} alt={name}/>
-              </div>
-              <button className={styles.button}>
-                <IoChevronForward size='40'/>
-              </button>
-            </div>
-          </div>
+          {overlay ?
+            <Overlay name={name} images={images} imageIndex={imageIndex}  handleImage={this.handleImage.bind(this)} toggle={this.toggleOverlay.bind(this)} />
+            : null
+          }
         </div>
       );
     }
@@ -157,17 +182,23 @@ Component.propTypes = {
     ]),
   }),
   pushLocalStorage: PropTypes.func,
+  qtyIncrease: PropTypes.func,
+  updateLocalStorage: PropTypes.func,
 };
 
 const mapStateToProps = (state, props) => ({
   product: getProductByID(state, props.match.params.id),
   loading: getLoadingState(state),
+  cart: getCart(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchProductByIdApi: (id) => dispatch(fetchProductById(id)),
   addToCart: (item) => dispatch(addToCart(item)),
-  pushLocalStorage: (cart) => dispatch(pushToLocalStorage(cart)),
+  qtyIncrease: (id) => dispatch(pushQtyIncrease(id)),
+  qtyDecrease: (id) => dispatch(pushQtyDecrease(id)),
+  pushLocalStorage: (item) => dispatch(pushToLocalStorage(item)),
+  updateLocalStorage: (item) => dispatch(updateLocalStorage(item)),
 });
 
 const ProductViewContainer = connect(mapStateToProps, mapDispatchToProps)(Component);
