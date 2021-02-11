@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Ri24HoursLine,
   RiTruckLine,
@@ -9,6 +9,7 @@ import {
 } from 'react-icons/ri';
 import { Container, Row, Col } from 'react-bootstrap';
 import Flag from 'react-world-flags';
+import useOutsideClick from '../../../utilities/clickOutsideHook';
 import styles from './TopBar.module.scss';
 
 const languages = [{id: 'gb', name: 'English'}, {id: 'pl', name: 'Polski'}, {id: 'de', name: 'Deutsch'}];
@@ -18,8 +19,10 @@ const TopBar = () => {
   const [id, setId] = useState(languages[0].id);
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
-    setOpen(!open);
+  const ref = useRef();
+
+  const handleOpen = (state) => {
+    setOpen(state);
   };
 
   const handleChange = (id) => {
@@ -29,6 +32,8 @@ const TopBar = () => {
     setLanguage(filtered[0].name);
     setOpen(!open);
   };
+
+  useOutsideClick(ref,  () => handleOpen(false));
 
   return (
     <div className={styles.root}>
@@ -51,8 +56,8 @@ const TopBar = () => {
             </ul>
           </Col>
           <Col xs='12' sm='3'>
-            <div className={styles.language}>
-              <button className={styles.button} onClick={() => handleOpen()}>
+            <div className={styles.language} ref={ref}>
+              <button className={styles.button} onClick={() => handleOpen(true)}>
                 <Flag code={id} height='12' />
                 <span className={styles.buttonTitle}>{language}</span>
                 {open ?
