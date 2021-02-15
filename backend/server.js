@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 const productsRoutes = require('./routes/products.routes');
 const categoriesRoutes = require('./routes/categories.routes');
+const ordersRoutes = require('./routes/orders.routes');
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 /* API ENDPOINTS */
 app.use('/api', productsRoutes);
 app.use('/api', categoriesRoutes);
+app.use('/api', ordersRoutes);
 
 /* API ERROR PAGES */
 app.use('/api', (req, res) => {
@@ -28,18 +30,20 @@ app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'));
 });
 
+const port = process.env.PORT || 8000;
+
+app.listen(port, () => {
+  console.log('Server is running on port: '+port);
+});
 
 /* MONGOOSE */
-//mongoose.connect(process.env.NODE_ENV === 'production' ? 'mongodb+srv://user:123456ytrewq@cluster0.c3pjw.mongodb.net/final_project?retryWrites=true&w=majority' : 'mongodb://localhost:27017/madzitaTools', { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect('mongodb+srv://user:123456ytrewq@cluster0.c3pjw.mongodb.net/final_project?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://newClient:NrsW4jeg6aM9A68H@cluster0.c3pjw.mongodb.net/final_project?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+
 const db = mongoose.connection;
+
 db.once('open', () => {
   console.log('Successfully connected to the database');
 });
 db.on('error', err => console.log('Error: ' + err));
 
 /* START SERVER */
-const port = process.env.PORT || 8000;
-app.listen(port, () => {
-  console.log('Server is running on port: '+port);
-});

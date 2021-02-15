@@ -23,20 +23,24 @@ exports.getById = async (req, res) => {
 };
 
 exports.post = async (req, res) => {
-  const { orderId, name, adress, price } = req.body;
+  const { name, adress, email, info, totalValue, products } = req.body.order;
 
   try {
     const newOrder = new Order({
-      orderId: orderId,
       name: name,
-      price: price,
       adress: adress,
+      email: email,
+      info: info,
+      totalValue: totalValue,
+      products: [...products],
     });
-    await newConcert.save();
-    messageOk(res);
+
+    await newOrder.save();
+    res.send({newOrder});
+
   }
   catch(err) {
-    messageError(res, err);
+    res.status(500).json(err);
   }
 };
-}
+
