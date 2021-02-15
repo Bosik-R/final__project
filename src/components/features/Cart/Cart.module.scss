@@ -2,7 +2,7 @@
 
 .root {
   width: 100%;
-  min-height: calc(100vh - $headerHeight);
+  min-height: $optimalHeight;
   display: flex;
   justify-content: flex;
   align-items: flex-start;
