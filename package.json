@@ -38,16 +38,12 @@
     ]
   },
   "dependencies": {
-    "@bosiu/id-generator": "^1.0.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-brands-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.13",
-    "@material-ui/core": "^4.7.0",
-    "@material-ui/icons": "^4.5.1",
     "axios": "^0.21.0",
     "bootstrap": "^4.5.3",
-    "clsx": "^1.1.1",
     "cors": "2.8.5",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
@@ -61,19 +57,15 @@
     "react-bootstrap": "^1.4.0",
     "react-bootstrap-country-select": "^0.7.11",
     "react-dom": "^16.12.0",
-    "react-flag-icon-css": "^1.0.25",
-    "react-flexbox-grid": "^2.1.2",
     "react-icons": "^4.1.0",
     "react-redux": "^7.1.3",
     "react-router-dom": "^5.1.2",
     "react-router-transitioner": "^0.1.4",
     "react-scripts": "3.2.0",
     "react-test-renderer": "^16.12.0",
-    "react-transition-group": "^4.4.1",
     "react-world-flags": "^1.4.0",
     "redux": "^4.0.4",
-    "redux-thunk": "^2.3.0",
-    "socket.io": "2.2.0"
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "husky": "^3.1.0",
