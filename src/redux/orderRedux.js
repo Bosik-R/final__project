@@ -22,8 +22,8 @@ export const sendOrderToApi = (order) => {
 
     try{
       let res = await Axios.post(`${API_URL}/orders`, {order});
-      console.log(res);
-      await dispatch(fetchOrder(res.data.newOrder));
+      const newOrder = res.data.newOrder;
+      await dispatch(fetchOrder(newOrder));
     }
     catch(err)  {
       dispatch(fetchError(err.message));

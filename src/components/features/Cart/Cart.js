@@ -61,7 +61,7 @@ class Component extends React.Component {
             </Row>
             <Row>
               <Col xs='12' className={styles.orderFormMobile}>
-                <OrderForm cart={cart}/>
+                <OrderForm cart={cart} mobile={true} />
               </Col>
             </Row>
           </Container>

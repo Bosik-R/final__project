@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getProductByID, fetchProductById, getLoadingState } from '../../../redux/productsRedux';
-import { addToCart, getCart, updateLocalStorage } from '../../../redux/cartRedux';
+import { addToCart, getCart } from '../../../redux/cartRedux';
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { BiExpand } from 'react-icons/bi';
 import { FaEuroSign } from 'react-icons/fa';
@@ -22,13 +22,6 @@ class Component extends React.Component {
     const {fetchProductByIdApi, match} = this.props;
 
     fetchProductByIdApi(match.params.id);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if(prevProps.cart.products !== this.props.cart.products) {
-
-      this.props.updateLocalStorage(this.props.cart);
-    }
   }
 
   handleImage(img) {
@@ -198,7 +191,6 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = dispatch => ({
   fetchProductByIdApi: (id) => dispatch(fetchProductById(id)),
   addToCart: (item) => dispatch(addToCart(item)),
-  updateLocalStorage: (item) => dispatch(updateLocalStorage(item)),
 });
 
 const ProductViewContainer = connect(mapStateToProps, mapDispatchToProps)(Component);

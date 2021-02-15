@@ -69,26 +69,6 @@ export const getFromLocalStorage = () => {
   };
 };
 
-export const pushToLocalStorage = ( cart ) => {
-  return () => {
-    try {
-      const storage = JSON.parse(localStorage.getItem('cart'));
-      if(storage === null){
-        const data = {
-          products: [cart],
-        };
-        localStorage.setItem('cart', [JSON.stringify(data)]);
-      }else{
-        storage.products.push(cart);
-        localStorage.setItem('cart', [JSON.stringify(storage)]);
-      }
-    }
-    catch(err) {
-      console.log(err);
-    }
-  };
-};
-
 export const removeFromLocalStorage = ( _id ) => {
   return (dispatch) => {
     try {
@@ -110,7 +90,6 @@ export const removeFromLocalStorage = ( _id ) => {
 export const updateLocalStorage = ( cart ) => {
   return () => {
     try {
-      localStorage.clear('cart');
       localStorage.setItem('cart', [JSON.stringify(cart)]);
     }
 
@@ -119,19 +98,6 @@ export const updateLocalStorage = ( cart ) => {
     }
   };
 };
-
-export const clearLocalStorage = () => {
-  return () => {
-    try {
-      localStorage.clear('cart');
-    }
-
-    catch(err) {
-      console.log(err);
-    }
-  };
-};
-
 
 /* reducer */
 export const reducer = (statePart = [], action = {}) => {
@@ -149,8 +115,6 @@ export const reducer = (statePart = [], action = {}) => {
           }) : [...statePart.products, action.payload],
       };
     }
-
-
     case STORAGE_TO_STATE: {
       return {
         products: statePart.products.length === 0 ? action.payload : [...statePart.products],

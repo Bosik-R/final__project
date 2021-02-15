@@ -13,7 +13,7 @@ const Component = ({ cart, toggle }) => {
     <div className={styles.root}>
       <div  ref={ref} className={styles.formWrapper}>
         <button className={styles.exit} onClick={() => toggle()}>X</button>
-        <OrderForm cart={cart} toggle={toggle}/>
+        <OrderForm cart={cart} toggle={toggle} mobile={false}/>
       </div>
     </div>
   );

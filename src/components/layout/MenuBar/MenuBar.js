@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { cartQty, getCart, getFromLocalStorage } from '../../../redux/cartRedux.js';
+import { cartQty, getCart, getFromLocalStorage, updateLocalStorage } from '../../../redux/cartRedux.js';
 import { order } from '../../../redux/orderRedux';
 import { Container, Row, Col} from 'react-bootstrap';
 import { IoCartOutline, IoNewspaperOutline } from 'react-icons/io5';
@@ -14,6 +14,14 @@ class Component extends React.Component {
     const { cart, pullLocalStorage } = this.props;
     if(cart.products.length === 0) pullLocalStorage();
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.qty !== this.props.qty) {
+
+      this.props.updateLocalStorage(this.props.cart);
+    }
+  }
+
 
   render(){
     const { qty, order } = this.props;
@@ -56,6 +64,7 @@ Component.propTypes = {
   pullLocalStorage: PropTypes.func,
   qty: PropTypes.number,
   order: PropTypes.object,
+  updateLocalStorage: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -66,6 +75,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   pullLocalStorage: () => dispatch(getFromLocalStorage()),
+  updateLocalStorage: (cart) => dispatch(updateLocalStorage(cart)),
 });
 
 const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Component);

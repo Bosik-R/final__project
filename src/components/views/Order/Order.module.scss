@@ -1,0 +1,68 @@
+@import "../../../styles/settings.scss";
+
+.root {
+  width: 100%;
+  min-height: $optimalHeight;
+  background-color: $bg-light;
+  padding: 30px 0;
+
+  .wrapper {
+    max-width: 1100px;
+    width: 100%;
+    background-color: $bg-light;
+    margin: 20px 0;
+    padding: 10px;
+    border: 0.5px solid $primary-color;
+
+    .productWrapper {
+      margin-top: 25px;
+      margin-bottom: 25px;
+      padding: 10px;
+      border: $border-thin;
+      box-shadow: 0px 9px 5px -4px $box-shadow;
+    }
+
+    .rowBorder {
+      border: $border-thin;
+      //padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      box-shadow: 0px 9px 5px -4px $box-shadow;
+
+      .name,
+      .id {
+        font-size: 16px;
+        line-height: 16px;
+        padding: 10px 20px 10px 5px;
+        text-align: right;
+        border-right: $border-thin;
+        background-color: $primary-color;
+        color: $text-color-light;
+      }
+
+      .value,
+      .idValue {
+        padding: 10px 5px 10px 20px;
+        text-align: left;
+        font-size: 16px;
+        line-height: 16px;
+      }
+
+      .id,
+      .idValue {
+        @media (max-width: 767px) {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+.empty {
+  width: 100%;
+  background-color: $bg-light;
+  height: $optimalHeight;
+  display: grid;
+  place-items: center;
+}

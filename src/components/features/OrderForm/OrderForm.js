@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendOrderToApi } from '../../../redux/orderRedux';
-import { clearLocalStorage } from '../../../redux/cartRedux';
+import { totalPrice, updateLocalStorage } from '../../../redux/cartRedux';
 import styles from './OrderForm.module.scss';
 
-const Component = ({ cart, toggle, sendOrder, cleanCart }) => {
+const Component = ({ cart, toggle, sendOrder, total, updateStorage, mobile }) => {
   const [name, setName] = useState('');
   const [adress, setAdress] = useState('');
   const [email, setEmail] = useState('');
@@ -19,14 +19,14 @@ const Component = ({ cart, toggle, sendOrder, cleanCart }) => {
       adress: adress,
       email: email,
       info: info,
+      totalValue: total,
       products: cart.products,
     };
-    console.log(order);
 
     sendOrder(order);
-    cleanCart();
+    updateStorage('');
     cart.products = [];
-    toggle();
+    if(!mobile) toggle();
   };
 
   return (
@@ -52,14 +52,21 @@ Component.propTypes = {
   toggle: PropTypes.func,
   sendOrder: PropTypes.func,
   cleanCart: PropTypes.func,
+  total: PropTypes.number,
+  updateStorage: PropTypes.func,
+  mobile: PropTypes.bool,
 };
+
+const mapStateToProps = state => ({
+  total: totalPrice(state),
+});
 
 const mapDispatchToProps = dispatch => ({
   sendOrder: (order) => dispatch(sendOrderToApi(order)),
-  cleanCart: () => dispatch(clearLocalStorage()),
+  updateStorage: (item) => dispatch(updateLocalStorage(item)),
 });
 
-const OrderFormMobileContainer = connect(null, mapDispatchToProps)(Component);
+const OrderFormMobileContainer = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export { OrderFormMobileContainer as OrderForm };
 
