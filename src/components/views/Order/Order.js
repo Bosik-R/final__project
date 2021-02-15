@@ -7,7 +7,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { FaEuroSign } from 'react-icons/fa';
 
 const Component = ({ order }) => {
-  console.log(order);
 
   if(order._id !== undefined){
     return (
@@ -64,7 +63,7 @@ const Component = ({ order }) => {
               ))}
               <Row className={styles.rowBorder}>
                 <Col xs='7' className={styles.name}>Order Total Value:</Col>
-                <Col xs='5' className={styles.total}><FaEuroSign/>{order.totalValue}</Col>
+                <Col xs='5' className={styles.value}><FaEuroSign/>{order.totalValue}</Col>
               </Row>
             </Col>
           </Row>

@@ -103,8 +103,6 @@ export const updateLocalStorage = ( cart ) => {
 export const reducer = (statePart = [], action = {}) => {
   switch (action.type) {
     case ADD_TO_CART: {
-      console.log('staePart',statePart);
-      console.log('payload', action.payload);
       return {
         products:  statePart.products.length === 0 ?
           [action.payload] : statePart.products.filter(item => item._id === action.payload._id).length > 0 ? statePart.products.map(item => {
