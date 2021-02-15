@@ -31,7 +31,6 @@ Component.propTypes = {
   item: PropTypes.object,
 };
 
-
 export {
   Component as ProductBox,
 };

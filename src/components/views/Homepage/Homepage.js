@@ -1,9 +1,6 @@
 import React from 'react';
-
 import { Promoted } from '../../features/Promoted/Promoted';
 import { CategoryBar } from '../../features/CategoryBar/CategoryBar';
-
-
 import styles from './Homepage.module.scss';
 
 const Component = () => (

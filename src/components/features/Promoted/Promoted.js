@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import Carousel from 'react-bootstrap/Carousel';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-
 import styles from './Promoted.module.scss';
 
 const Component = () => {

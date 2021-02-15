@@ -1,7 +1,5 @@
 import React from 'react';
-
 import { FaTwitter, FaFacebookF, FaInstagram } from 'react-icons/fa';
-
 import styles from './Footer.module.scss';
 
 const Component = () => (

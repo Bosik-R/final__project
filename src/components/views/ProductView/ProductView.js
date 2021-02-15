@@ -2,14 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getProductByID, fetchProductById, getLoadingState } from '../../../redux/productsRedux';
-import { addToCart, getCart, pushToLocalStorage, pushQtyIncrease, updateLocalStorage, pushQtyDecrease } from '../../../redux/cartRedux';
+import { addToCart, getCart, updateLocalStorage } from '../../../redux/cartRedux';
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { BiExpand } from 'react-icons/bi';
 import { FaEuroSign } from 'react-icons/fa';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-import Overlay from '../../features/Overlay/Overlay';
+import ProductOverlay from '../../features/ProductOverlay/ProductOverlay';
 import styles from './ProductView.module.scss';
-
 
 class Component extends React.Component {
 
@@ -25,6 +24,13 @@ class Component extends React.Component {
     fetchProductByIdApi(match.params.id);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.cart.products !== this.props.cart.products) {
+
+      this.props.updateLocalStorage(this.props.cart);
+    }
+  }
+
   handleImage(img) {
     const  index = this.props.product.images.indexOf(img);
     this.setState({imageIndex: index});
@@ -34,15 +40,12 @@ class Component extends React.Component {
     this.setState({overlay: !this.state.overlay});
   }
 
-  handleAddToCart(e, item) {
+  handleAddToCart(e, product) {
     e.preventDefault();
 
-    const {cart, updateLocalStorage, addToCart} = this.props;
+    product.qty = this.state.qty;
 
-    item.qty = this.state.qty;
-
-    addToCart(item);
-    updateLocalStorage(cart);
+    this.props.addToCart(product);
   }
 
   qtyMinus() {
@@ -153,7 +156,7 @@ class Component extends React.Component {
             </Row>
           </Container>
           {overlay ?
-            <Overlay name={name} images={images} imageIndex={imageIndex}  handleImage={this.handleImage.bind(this)} toggle={this.toggleOverlay.bind(this)} />
+            <ProductOverlay name={name} images={images} imageIndex={imageIndex}  handleImage={this.handleImage.bind(this)} toggle={this.toggleOverlay.bind(this)} />
             : null
           }
         </div>
@@ -195,9 +198,6 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = dispatch => ({
   fetchProductByIdApi: (id) => dispatch(fetchProductById(id)),
   addToCart: (item) => dispatch(addToCart(item)),
-  qtyIncrease: (id) => dispatch(pushQtyIncrease(id)),
-  qtyDecrease: (id) => dispatch(pushQtyDecrease(id)),
-  pushLocalStorage: (item) => dispatch(pushToLocalStorage(item)),
   updateLocalStorage: (item) => dispatch(updateLocalStorage(item)),
 });
 

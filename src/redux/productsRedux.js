@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { API_URL } from '../server';
 
 /* selectors */
 export const getAllProducts = ({ products }) => products.data;
@@ -11,6 +12,7 @@ export const getProductByID = ({products}, id) => {
   }else return {};
 };
 
+export const getLanguages = ({ languages }) => languages;
 
 /* action name creator */
 const reducerName = 'products';
@@ -28,11 +30,11 @@ export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 
 /* thunk creators */
 export const fetchProducts = () => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     dispatch(fetchStarted());
 
-    Axios
-      .get('http://localhost:8000/api/products')
+
+    await Axios.get(`${API_URL}/products`)
       .then(res => {
         dispatch(fetchSuccess(res.data));
       })
@@ -47,7 +49,7 @@ export const fetchProductById = (id) => {
     dispatch(fetchStarted());
 
     Axios
-      .get(`http://localhost:8000/api/products/${id}`)
+      .get(`${API_URL}/products/${id}`)
       .then(res => {
         dispatch(fetchSuccess(res.data));
       })

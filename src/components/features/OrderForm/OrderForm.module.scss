@@ -1,0 +1,46 @@
+@import "../../../styles/settings.scss";
+
+.root {
+  width: 100%;
+  background-color: $light-color;
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 18px;
+
+  label {
+    margin: 2px;
+  }
+
+  input,
+  textarea {
+    width: 70%;
+    margin: 0 0 30px;
+    padding: 5px 10px;
+    border: none;
+    border-bottom: $border-thin;
+
+    &:focus {
+      outline-style: solid;
+      outline-color: transparent;
+      border-color: $primary-color;
+    }
+  }
+
+  button {
+    width: 70%;
+    padding: 10px 30px;
+    margin: 20px 0;
+    border: $border-thin;
+    background-color: $primary-color;
+    color: $text-color-light;
+    box-shadow: 0px 9px 5px -4px $box-shadow;
+
+    &:active {
+      box-shadow: 0 5px 5px -4px $box-shadow;
+      transform: translateY(5px);
+    }
+  }
+}

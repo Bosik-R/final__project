@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
-import styles from './Overlay.module.scss';
+import styles from './ProductOverlay.module.scss';
 
 const Overlay = ({ name, images, imageIndex, toggle}) => {
   const [index, setIndex] = useState(imageIndex);

@@ -1,15 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { Container,Row, Col, Spinner } from 'react-bootstrap';
-
 import { ProductBox } from '../ProductBox/ProductBox';
-
 import { connect } from 'react-redux';
 import { getAllProducts, fetchProducts, getLoadingState } from '../../../redux/productsRedux';
 import { getAllCategories, fetchCategories } from '../../../redux/categoriesRedux';
-import { getCart } from '../../../redux/cartRedux';
-
 import styles from './CategoryBar.module.scss';
 
 class Component extends React.Component {
@@ -22,6 +17,7 @@ class Component extends React.Component {
 
     fetchAllProducts();
     fetchAllCategories();
+
   }
 
   handleCategory(category) {
@@ -47,15 +43,16 @@ class Component extends React.Component {
       );
     } else {
       const productsFiltered = products.filter(product => product.category === activeCategory);
+
       return (
         <div className={styles.root}>
-          <Container >
+          <Container>
             <Row>
               <Col xs='12' className={styles.tabsWrapper}>
                 <ul>
                   {categories.map(category => (
                     <li
-                      key={category._id}
+                      key={category.id}
                       className={category.id === activeCategory ? styles.tabActive : styles.tab}
                       onClick={() => this.handleCategory(category)}
                     >{category.name}</li>
@@ -65,8 +62,8 @@ class Component extends React.Component {
               <Col xs='12' className={styles.products}>
                 <div className={styles.productsList}>
                   {productsFiltered.map(product => (
-                    <div key={product.id} className={styles.productWrapper}>
-                      <ProductBox item={product} />
+                    <div key={product._id} className={styles.productWrapper}>
+                      <ProductBox item={product}/>
                     </div>
                   ))}
                 </div>
@@ -79,11 +76,9 @@ class Component extends React.Component {
   }
 }
 
-
 Component.propTypes = {
   fetchAllProducts: PropTypes.func,
   fetchAllCategories: PropTypes.func,
-  cart: PropTypes.object,
   products: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.object,
@@ -104,16 +99,12 @@ Component.propTypes = {
 const mapStateToProps = state => ({
   products: getAllProducts(state),
   categories: getAllCategories(state),
-  cart: getCart(state),
   loading: getLoadingState(state),
-  //cartlocal: pushToLocalStorage(state),
-  //cartLocal: getFromLocalStorage(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchAllProducts: () => dispatch(fetchProducts()),
   fetchAllCategories: () => dispatch(fetchCategories()),
-  //fetchLocalStorage: () => dispatch(getFromLocalStorage()),
 });
 
 const ContainerCategoryBar = connect(mapStateToProps, mapDispatchToProps)(Component);

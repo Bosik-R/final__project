@@ -1,4 +1,4 @@
-@import '../../../styles/settings.scss';
+@import "../../../styles/settings.scss";
 
 .root {
   background-color: $bg-light;
@@ -23,30 +23,49 @@
       }
     }
 
-    .cart {
-      color: $dark-color;
-      position: relative;
-      padding: 0;
-      margin-right: 30px;
-      height: 45px;
-      float: right;
+    .menu {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
 
-      div {
-        position: absolute;
-        top: 0;
-        right: -15px;
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-        background-color: $primary-color;
-        display: grid;
-        place-items: center;
-        span {
-          color: $text-color-light;
+      .cart,
+      .order {
+        color: $dark-color;
+        position: relative;
+        padding: 0;
+        margin-right: 30px;
+        height: 45px;
+        width: 45px;
+        font-size: 45px;
+        line-height: 45px;
+
+        &:hover {
+          color: $primary-color;
+
+          div {
+            background-color: $dark-color;
+            color: $light-color;
+          }
+        }
+
+        div {
+          position: absolute;
+          top: 0;
+          right: -15px;
+          width: 25px;
+          height: 25px;
+          font-size: 14px;
+          line-height: 14px;
+          border-radius: 50%;
+          background-color: $primary-color;
+          display: grid;
+          place-items: center;
+
+          span {
+            color: $text-color-light;
+          }
         }
       }
     }
   }
 }
-
-

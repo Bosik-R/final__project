@@ -1,8 +1,8 @@
 import Axios from 'axios';
+import { API_URL } from '../server';
 
 /* selectors */
 export const getAllCategories = ({ categories }) => categories.data;
-
 
 /* action name creator */
 const reducerName = 'categories';
@@ -25,7 +25,7 @@ export const fetchCategories = () => {
     dispatch(fetchStarted());
 
     Axios
-      .get('http://localhost:8000/api/categories')
+      .get(`${API_URL}/categories`)
       .then(res => {
         dispatch(fetchSuccess(res.data));
       })

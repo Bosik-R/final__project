@@ -13,8 +13,19 @@ export const initialState = {
       error: false,
     },
   },
+
+  order: {
+    data: {},
+    error: '',
+  },
+
   cart: {
     products: [],
-    orderId: '',
   },
+
+  languages: [
+    {code: 'gb', name: 'English'},
+    {code: 'pl', name: 'Polski'},
+    {code: 'de', name: 'Deutsch'},
+  ],
 };

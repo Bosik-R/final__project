@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { Header } from '../Header/Header';
 import { Footer } from '../Footer/Footer';
-
 import styles from './MainLayout.module.scss';
 
 const Component = ({children}) => (
@@ -20,6 +18,5 @@ Component.propTypes = {
 
 export {
   Component as MainLayout,
-  // Container as MainLayout,
   Component as MainLayoutComponent,
 };

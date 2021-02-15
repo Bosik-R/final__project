@@ -1,4 +1,7 @@
 import React, { useState, useRef } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getLanguages } from '../../../redux/productsRedux';
 import {
   Ri24HoursLine,
   RiTruckLine,
@@ -12,28 +15,26 @@ import Flag from 'react-world-flags';
 import useOutsideClick from '../../../utilities/clickOutsideHook';
 import styles from './TopBar.module.scss';
 
-const languages = [{id: 'gb', name: 'English'}, {id: 'pl', name: 'Polski'}, {id: 'de', name: 'Deutsch'}];
-
-const TopBar = () => {
+const Component = ({ languages }) => {
   const [language, setLanguage] = useState(languages[0].name);
-  const [id, setId] = useState(languages[0].id);
+  const [code, setCode] = useState(languages[0].code);
   const [open, setOpen] = useState(false);
 
   const ref = useRef();
 
-  const handleOpen = (state) => {
-    setOpen(state);
-  };
-
-  const handleChange = (id) => {
-    const filtered = languages.filter(item => item.id === id);
-
-    setId(filtered[0].id);
-    setLanguage(filtered[0].name);
+  const handleOpen = () => {
     setOpen(!open);
   };
 
-  useOutsideClick(ref,  () => handleOpen(false));
+  const handleChange = (code) => {
+    const filtered = languages.filter(item => item.code === code);
+
+    setCode(filtered[0].code);
+    setLanguage(filtered[0].name);
+    setOpen(false);
+  };
+
+  useOutsideClick(ref,  () => setOpen(false));
 
   return (
     <div className={styles.root}>
@@ -57,8 +58,8 @@ const TopBar = () => {
           </Col>
           <Col xs='12' sm='3'>
             <div className={styles.language} ref={ref}>
-              <button className={styles.button} onClick={() => handleOpen(true)}>
-                <Flag code={id} height='12' />
+              <button className={styles.button} onClick={() => handleOpen()}>
+                <Flag code={code} height='12' />
                 <span className={styles.buttonTitle}>{language}</span>
                 {open ?
                   <RiArrowUpSFill className={styles.dropdownIcon} />
@@ -66,9 +67,9 @@ const TopBar = () => {
               </button>
               <ul className={!open ? styles.dropdownClosed : styles.dropdownOpen}>
                 {languages.map(item =>
-                  <li key={item.id}>
-                    <button onClick={() => handleChange(item.id)}>
-                      <Flag code={item.id} height='16' width='24'/>
+                  <li key={item.code}>
+                    <button onClick={() => handleChange(item.code)}>
+                      <Flag code={item.code} height='16' width='24'/>
                       <span className={styles.buttonTitle}>{item.name}</span>
                     </button>
                   </li>
@@ -82,4 +83,17 @@ const TopBar = () => {
   );
 };
 
-export default TopBar;
+Component.propTypes = {
+  languages: PropTypes.array,
+};
+
+const mapStateToProps = state => ({
+  languages: getLanguages(state),
+});
+
+const TopBarContainer = connect(mapStateToProps)(Component);
+
+export {
+  TopBarContainer as TopBar,
+  Component as TopBarComponent,
+};

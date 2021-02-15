@@ -1,19 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { connect } from 'react-redux';
 import {
   pushQtyIncrease,
   pushQtyDecrease,
   removeFromLocalStorage,
 } from '../../../redux/cartRedux';
-
 import { Row, Col } from 'react-bootstrap';
-
 import { BsTrash } from 'react-icons/bs';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { FaEuroSign } from 'react-icons/fa';
-
 import styles from './CartItem.module.scss';
 import { Link } from 'react-router-dom';
 
