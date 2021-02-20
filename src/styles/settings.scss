@@ -7,8 +7,8 @@ $hover-color: #ff7600;
 $hot-deal: #f80000;
 $bg-light: #f3f3f3;
 
-$font-promo: "Montserrat", sans-serif;
-$font-bold: "Overlock", cursive;
+$font-body: "Overlock", cursive;
+$font-promo: "Montserrat Alternates", sans-serif;
 
 $border-thin: 0.5px solid #575757;
 
@@ -16,3 +16,9 @@ $box-shadow: #646464;
 $message-color: #009100;
 
 $optimalHeight: calc(100vh - 253px);
+
+/* fonts imported */
+
+//font-family: 'Montserrat Alternates', sans-serif;
+//font-family: 'Overlock', cursive;
+//font-family: 'Rubik', sans-serif;
