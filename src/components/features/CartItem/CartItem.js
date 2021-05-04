@@ -23,6 +23,14 @@ const Component = ({
   qtyDecrease,
   qtyIncrease,
 }) => {
+  console.log(_id);
+  const qtyMinus = (id) => {
+    if (qty === 1) {
+      qty = 1;
+    } else {
+      qtyDecrease(id);
+    }
+  };
 
   return (
     <div className={ styles.root}>
@@ -36,9 +44,14 @@ const Component = ({
           </Link>
         </Col>
         <Col xs='4' md='3' className={styles.qty}>
-          <button onClick={() => qtyDecrease(_id)}>
+          {qty !== 1 ? <button onClick={() => qtyMinus(_id)}>
             <AiOutlineMinus/>
           </button>
+            :
+            <button disabled>
+              <AiOutlineMinus/>
+            </button>
+          }
           <div>
             <span>
               {qty}

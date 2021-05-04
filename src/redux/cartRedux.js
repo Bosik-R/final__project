@@ -104,13 +104,7 @@ export const reducer = (statePart = [], action = {}) => {
   switch (action.type) {
     case ADD_TO_CART: {
       return {
-        products:  statePart.products.length === 0 ?
-          [action.payload] : statePart.products.filter(item => item._id === action.payload._id).length > 0 ? statePart.products.map(item => {
-            if(item._id === action.payload._id) {
-              item.qty = item.qty + action.payload.qty;
-            }
-            return (item);
-          }) : [...statePart.products, action.payload],
+        products: [...statePart.products, action.payload],
       };
     }
     case STORAGE_TO_STATE: {

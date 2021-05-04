@@ -5,7 +5,7 @@ import { CssBaseline } from '@material-ui/core';
 import { store } from './redux/store';
 import { MainLayout } from './components/layout/MainLayout/MainLayout';
 import { Homepage } from './components/views/Homepage/Homepage';
-import { ProductView } from './components/views/ProductView/ProductView';
+import ProductViewContainer  from './components/views/ProductView/ProductView';
 import { Cart } from './components/features/Cart/Cart';
 import { NotFound } from './components/views/NotFound/NotFound';
 import { Order } from './components/views/Order/Order';
@@ -20,7 +20,7 @@ const App = () => (
       <MainLayout>
         <Switch>
           <Route exact path='/' component={Homepage} />
-          <Route path='/products/:id' component={ProductView} />
+          <Route path='/products/:id' component={ProductViewContainer} />
           <Route path='/cart' component={Cart} />
           <Route path='/orderView' component={Order} />
           <Route path='*' component={NotFound} />
