@@ -2,6 +2,7 @@
   "name": "final__project",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://madzita.tomasz-rosik.eu/",
   "scripts": {
     "start": "run-p start:* ",
     "start:server": "nodemon backend/server.js",
@@ -45,6 +46,7 @@
     "@material-ui/core": "^4.7.0",
     "axios": "^0.21.0",
     "bootstrap": "^4.5.3",
+    "caniuse-lite": "^1.0.30001223",
     "cors": "2.8.5",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
